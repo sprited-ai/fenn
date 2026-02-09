@@ -17,7 +17,7 @@ class Config:
     SNAPTRADE_USER_SECRET = os.getenv("SNAPTRADE_USER_SECRET")
     
     # Data storage
-    DATA_DIR = Path("data")
+    DATA_DIR = Path("../data")
     PORTFOLIO_DB = DATA_DIR / "portfolio.json"
     
     @classmethod
