@@ -34,7 +34,7 @@ export default function App() {
         >
           <Flex align="center" gap="3">
             <img 
-              src="/fenn-logo-horizontal.png" 
+              src="/fenn-logo-horizontal.svg" 
               alt="Fenn" 
               style={{ height: "48px", width: "auto" }} 
             />
