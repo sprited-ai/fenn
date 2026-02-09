@@ -18,18 +18,27 @@ class SnapTradeClient:
             client_id=Config.SNAPTRADE_CLIENT_ID
         )
         self.user_id = Config.SNAPTRADE_USER_ID
-        self.user_secret = None
+        self.user_secret = Config.SNAPTRADE_USER_SECRET
     
     def ensure_user(self) -> Dict[str, str]:
         """Ensure SnapTrade user exists, creating if necessary"""
+        # If we already have user_secret from config, use it
+        if self.user_secret:
+            return {
+                "user_id": self.user_id,
+                "user_secret": self.user_secret
+            }
+        
+        # Otherwise, try to register a new user
         try:
-            # Try to register user (idempotent - will return existing if already exists)
             response = self.client.authentication.register_snap_trade_user(
                 body={"userId": self.user_id}
             )
             
             if isinstance(response, UserIDandSecret):
                 self.user_secret = response.user_secret
+                print(f"\n⚠️  IMPORTANT: Save this user_secret to your .env file:")
+                print(f"SNAPTRADE_USER_SECRET={response.user_secret}")
                 return {
                     "user_id": response.user_id,
                     "user_secret": response.user_secret
@@ -37,11 +46,21 @@ class SnapTradeClient:
             else:
                 # Handle dict response
                 self.user_secret = response.get("userSecret")
+                print(f"\n⚠️  IMPORTANT: Save this user_secret to your .env file:")
+                print(f"SNAPTRADE_USER_SECRET={self.user_secret}")
                 return {
                     "user_id": response.get("userId"),
                     "user_secret": response.get("userSecret")
                 }
         except Exception as e:
+            error_str = str(e)
+            
+            if "already exist" in error_str.lower():
+                raise ValueError(
+                    f"User '{self.user_id}' already exists but SNAPTRADE_USER_SECRET is not in .env. \n"
+                    f"Please add the user_secret to your .env file or use a different SNAPTRADE_USER_ID."
+                )
+            
             print(f"Error ensuring user: {e}")
             raise
     
@@ -55,7 +74,20 @@ class SnapTradeClient:
                 user_id=self.user_id,
                 user_secret=self.user_secret
             )
-            return response if isinstance(response, list) else []
+            
+            # Handle ApiResponseFor200 objects
+            if hasattr(response, 'body'):
+                data = response.body
+            else:
+                data = response
+            
+            # Convert to list if it's a list-like object
+            if isinstance(data, list):
+                return data
+            elif hasattr(data, '__iter__') and not isinstance(data, (str, dict)):
+                return list(data)
+            
+            return []
         except Exception as e:
             print(f"Error listing connections: {e}")
             return []
@@ -71,13 +103,29 @@ class SnapTradeClient:
                 user_secret=self.user_secret
             )
             
+            # Handle ApiResponseFor200 objects
+            if hasattr(response, 'body'):
+                data = response.body
+            else:
+                data = response
+            
             accounts = []
-            if isinstance(response, list):
-                for account in response:
+            if isinstance(data, list):
+                for account in data:
                     if hasattr(account, 'to_dict'):
                         accounts.append(account.to_dict())
-                    else:
+                    elif isinstance(account, dict):
                         accounts.append(account)
+                    else:
+                        accounts.append(str(account))
+            elif hasattr(data, '__iter__') and not isinstance(data, (str, dict)):
+                for account in data:
+                    if hasattr(account, 'to_dict'):
+                        accounts.append(account.to_dict())
+                    elif isinstance(account, dict):
+                        accounts.append(account)
+                    else:
+                        accounts.append(str(account))
             
             return accounts
         except Exception as e:

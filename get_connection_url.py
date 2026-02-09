@@ -20,12 +20,17 @@ def main():
         )
         
         # Extract URL from response
+        url = None
         if hasattr(response, 'redirect_uri'):
             url = response.redirect_uri
+        elif hasattr(response, 'body') and isinstance(response.body, dict):
+            url = response.body.get('redirectURI')
         elif isinstance(response, dict):
             url = response.get('redirectURI') or response.get('redirect_uri')
-        else:
-            url = str(response)
+        
+        if not url:
+            print(f"Raw response: {response}")
+            raise ValueError("Could not extract redirect URL from response")
         
         print("\n🔗 Connection Portal URL:")
         print(url)

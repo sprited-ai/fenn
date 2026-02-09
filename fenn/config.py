@@ -14,6 +14,7 @@ class Config:
     SNAPTRADE_CLIENT_ID = os.getenv("SNAPTRADE_CLIENT_ID")
     SNAPTRADE_CONSUMER_KEY = os.getenv("SNAPTRADE_CONSUMER_KEY")
     SNAPTRADE_USER_ID = os.getenv("SNAPTRADE_USER_ID", "jin_portfolio")
+    SNAPTRADE_USER_SECRET = os.getenv("SNAPTRADE_USER_SECRET")
     
     # Data storage
     DATA_DIR = Path("data")
