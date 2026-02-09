@@ -27,7 +27,7 @@ export default function App() {
           justify="between" 
           align="center" 
           css={{ 
-            paddingBottom: "48px",
+            paddingBottom: "24px",
             borderBottom: "1px solid var(--gray-a5)"
           }}
         >
@@ -43,6 +43,13 @@ export default function App() {
             Download
           </Button>
         </Flex>
+
+        {/* Tagline */}
+        <Box css={{ paddingTop: "24px", paddingBottom: "24px" }}>
+          <Text size="5" weight="medium" css={{ color: "var(--gray-12)" }}>
+            A financial tool that runs on your machine.
+          </Text>
+        </Box>
 
         {/* Main Content */}
         <Flex 
@@ -65,17 +72,30 @@ export default function App() {
           >
             <Heading size="5" mb="4">What is Fenn?</Heading>
             <Text as="p" size="3" css={{ lineHeight: "1.7", marginBottom: "12px" }}>
-              Fenn is a command-line tool that lets you securely download and
-              organize your personal financial data across connected accounts.
+              Fenn lets you securely retrieve and organize your personal financial data across connected institutions — while keeping that data under your control.
             </Text>
             <Text as="p" size="3" css={{ lineHeight: "1.7", marginBottom: "12px" }}>
-              It is designed for local-first data ownership — reports and
-              portfolio insights are generated on your machine, not in the cloud.
+              Unlike traditional cloud dashboards, Fenn operates on your device. Portfolio data is stored and processed locally, allowing you to generate reports, analyze trends, and maintain your financial history without relying on a centralized service.
             </Text>
-            <Text as="p" size="3" css={{ lineHeight: "1.7" }}>
-              Fenn requests read-only access through secure connection providers.
-              No banking credentials are stored by Fenn.
+            <Text as="p" size="3" css={{ lineHeight: "1.7", marginBottom: "12px" }}>
+              Fenn connects through secure provider authorization flows using read-only access. Banking credentials are never requested or stored by Fenn.
             </Text>
+            <Text as="p" size="3" css={{ lineHeight: "1.7", marginBottom: "12px" }}>
+              The guiding principle is simple:
+            </Text>
+            <Box 
+              as="blockquote" 
+              css={{ 
+                marginLeft: "16px",
+                paddingLeft: "16px",
+                borderLeft: "3px solid var(--gray-a6)",
+                fontStyle: "italic"
+              }}
+            >
+              <Text size="3" css={{ color: "var(--gray-11)" }}>
+                your financial data remains yours.
+              </Text>
+            </Box>
           </Box>
 
           {/* How it works */}
@@ -88,27 +108,29 @@ export default function App() {
             }}
           >
             <Heading size="5" mb="4">How it works</Heading>
+            <Text as="p" size="3" css={{ lineHeight: "1.7", marginBottom: "12px" }}>
+              Fenn follows a device-managed workflow:
+            </Text>
             <Flex direction="column" gap="2">
               <Text as="p" size="3" css={{ lineHeight: "1.7" }}>
-                • You install the Fenn CLI locally
+                • Install Fenn on your computer
               </Text>
               <Text as="p" size="3" css={{ lineHeight: "1.7" }}>
-                • Accounts are connected via a secure provider flow
+                • Link accounts through secure authorization providers
               </Text>
               <Text as="p" size="3" css={{ lineHeight: "1.7" }}>
-                • Financial data is synced and stored locally
+                • Sync financial data directly to your device
               </Text>
               <Text as="p" size="3" css={{ lineHeight: "1.7" }}>
-                • Reports are generated entirely on your device
+                • Generate reports and insights locally
               </Text>
             </Flex>
             <Text as="p" size="3" css={{ lineHeight: "1.7", marginTop: "16px" }}>
-              Fenn stores only the minimum metadata required for authentication
-              and connection management. Portfolio data remains local by default.
+              Fenn services retain only the minimal metadata necessary for authentication and connection management. Financial records remain stored on your machine by default.
             </Text>
           </Box>
 
-          {/* Invite Only */}
+          {/* Invite-only preview */}
           <Box 
             css={{ 
               padding: "32px",
@@ -117,13 +139,12 @@ export default function App() {
               backgroundColor: "var(--gray-a2)"
             }}
           >
-            <Heading size="5" mb="4">Invite Only</Heading>
+            <Heading size="5" mb="4">Invite-only preview</Heading>
             <Text as="p" size="3" css={{ lineHeight: "1.7", marginBottom: "12px" }}>
-              Fenn is currently in invite-only preview.
+              Fenn is currently in controlled preview as we refine security, reliability, and institutional integrations.
             </Text>
             <Text as="p" size="3" css={{ lineHeight: "1.7", marginBottom: "12px" }}>
-              Reviewers or institutions evaluating the product may request
-              access by contacting:
+              Reviewers or institutions evaluating the platform may request access by contacting:
             </Text>
             <Link href="mailto:support@sprited.app" size="3" weight="medium">
               support@sprited.app
