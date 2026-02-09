@@ -89,18 +89,18 @@ def status():
         for account in accounts:
             account_info = account.get("info", {})
             account_name = account_info.get("name", "Unknown")
-            balances = account.get("balances", {})
             positions = account.get("positions", [])
             
             click.echo(f"Account: {account_name}")
             
-            # Show balance if available
-            if isinstance(balances, dict):
-                total = balances.get("total", {})
-                if isinstance(total, dict):
-                    amount = total.get("amount", "N/A")
-                    currency = total.get("currency", "")
-                    click.echo(f"  Balance: {amount} {currency}")
+            # Show balance - check both locations
+            balance_info = account_info.get("balance", {})
+            if balance_info:
+                total = balance_info.get("total", {})
+                if isinstance(total, dict) and total.get("amount") is not None:
+                    amount = total.get("amount", 0)
+                    currency = total.get("currency", "USD")
+                    click.echo(f"  Balance: ${amount:,.2f} {currency}")
             
             click.echo(f"  Positions: {len(positions)}")
             
