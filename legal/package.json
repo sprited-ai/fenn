@@ -1,0 +1,16 @@
+{
+  "name": "legal-docs",
+  "version": "1.0.0",
+  "description": "Legal document versioning and publishing",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "type": "module",
+  "latestTerms": "/terms/2026-02-06-2726c54.html",
+  "latestPrivacy": "/privacy/2026-02-06-0a5da29.html",
+  "dependencies": {
+    "marked": "^17.0.1"
+  },
+  "latestTermsDate": "2026-02-06",
+  "latestPrivacyDate": "2026-02-06"
+}
