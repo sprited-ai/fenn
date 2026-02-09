@@ -6,11 +6,11 @@
     "build": "node build.js"
   },
   "type": "module",
-  "latestTerms": "/terms/2026-02-06-2726c54.html",
-  "latestPrivacy": "/privacy/2026-02-06-0a5da29.html",
+  "latestTerms": "/terms/2026-02-09-c315525.html",
+  "latestPrivacy": "/privacy/2026-02-09-4cc91ae.html",
   "dependencies": {
     "marked": "^17.0.1"
   },
-  "latestTermsDate": "2026-02-06",
-  "latestPrivacyDate": "2026-02-06"
+  "latestTermsDate": "2026-02-09",
+  "latestPrivacyDate": "2026-02-09"
 }

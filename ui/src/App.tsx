@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import { Theme, Container, Flex, Box, Heading, Text, Button, Link } from "@radix-ui/themes";
 import { DownloadIcon } from "@radix-ui/react-icons";
+import { TERMS_URL, PRIVACY_URL } from "./legal-urls";
 
 export default function App() {
   return (
@@ -33,7 +34,7 @@ export default function App() {
         >
           <Flex align="center" gap="3">
             <img 
-              src="/fenn-logo.svg" 
+              src="/fenn-logo-horizontal.png" 
               alt="Fenn" 
               style={{ height: "48px", width: "auto" }} 
             />
@@ -167,8 +168,8 @@ export default function App() {
             Sprited • All rights reserved
           </Text>
           <Flex gap="4">
-            <Link href="/terms" size="2" css={{ color: "var(--gray-11)" }}>Terms</Link>
-            <Link href="/privacy" size="2" css={{ color: "var(--gray-11)" }}>Privacy</Link>
+            <Link href={TERMS_URL} size="2" css={{ color: "var(--gray-11)" }}>Terms</Link>
+            <Link href={PRIVACY_URL} size="2" css={{ color: "var(--gray-11)" }}>Privacy</Link>
             <Link href="mailto:support@sprited.app" size="2" css={{ color: "var(--gray-11)" }}>Support</Link>
           </Flex>
         </Flex>
