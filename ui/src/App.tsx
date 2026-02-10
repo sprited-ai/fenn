@@ -219,9 +219,8 @@ fenn report --format html`}
             <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
               Fenn connects through secure provider authorization flows using read-only access. Banking credentials are never requested or stored by Fenn.
             </Text>
-            <Box 
-              as="blockquote"
-              css={{ 
+            <blockquote
+              style={{ 
                 borderLeft: "2px solid rgba(58,51,74,0.35)",
                 paddingLeft: "12px",
                 margin: "12px 0 0",
@@ -230,7 +229,7 @@ fenn report --format html`}
               }}
             >
               <Text size="2">your financial data remains yours.</Text>
-            </Box>
+            </blockquote>
           </Card>
 
           {/* How it works */}
@@ -259,7 +258,7 @@ fenn report --format html`}
             <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
               Fenn follows a device-managed workflow:
             </Text>
-            <Box as="ul" css={{ margin: "10px 0 0", padding: 0, listStyle: "none" }}>
+            <ul style={{ margin: "10px 0 0", padding: 0, listStyle: "none" }}>
               {[
                 "Install Fenn on your computer",
                 "Link accounts through secure authorization providers",
@@ -280,7 +279,7 @@ fenn report --format html`}
                   <Text css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.7" }}>{item}</Text>
                 </Flex>
               ))}
-            </Box>
+            </ul>
             <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginTop: "12px" }}>
               Fenn services retain only the minimal metadata necessary for authentication and connection management.
               Financial records remain stored on your machine by default.
@@ -323,7 +322,7 @@ fenn report --format html`}
               />
               Security & privacy
             </Heading>
-            <Box as="ul" css={{ margin: "10px 0 0", padding: 0, listStyle: "none" }}>
+            <ul style={{ margin: "10px 0 0", padding: 0, listStyle: "none" }}>
               {[
                 "Read-only access via secure authorization flows",
                 "No banking credentials stored by Fenn",
@@ -344,7 +343,7 @@ fenn report --format html`}
                   <Text size="2" css={{ color: "var(--gray-11)", lineHeight: "1.7" }}>{item}</Text>
                 </Flex>
               ))}
-            </Box>
+            </ul>
           </Card>
 
           {/* Setup */}
