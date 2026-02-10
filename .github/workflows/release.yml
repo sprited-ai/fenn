@@ -30,45 +30,6 @@ jobs:
           cd cli
           pyinstaller -n fenn --onefile fenn/__main__.py
 
-      - name: Code sign macOS binary
-        if: runner.os == 'macOS'
-        env:
-          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
-          MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-        run: |
-          # Create temporary keychain
-          echo "$MACOS_CERTIFICATE" | base64 --decode > certificate.p12
-          security create-keychain -p actions temp.keychain
-          security default-keychain -s temp.keychain
-          security unlock-keychain -p actions temp.keychain
-          security import certificate.p12 -k temp.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple: -s -k actions temp.keychain
-          
-          # Sign the binary
-          /usr/bin/codesign --force --options runtime --deep --sign "Developer ID Application" --timestamp cli/dist/fenn
-          
-          # Verify signature
-          /usr/bin/codesign --verify --verbose cli/dist/fenn
-          
-          # Create a zip for notarization
-          cd cli/dist
-          zip fenn.zip fenn
-          
-          # Notarize
-          xcrun notarytool submit fenn.zip \
-            --apple-id "$APPLE_ID" \
-            --password "$APPLE_APP_PASSWORD" \
-            --team-id "$APPLE_TEAM_ID" \
-            --wait
-          
-          # Clean up
-          rm fenn.zip
-          cd ../..
-          security delete-keychain temp.keychain
-
       - name: Package
         shell: bash
         run: |

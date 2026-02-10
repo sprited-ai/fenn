@@ -6,7 +6,7 @@
 curl -fsSL https://raw.githubusercontent.com/sprited-ai/fenn/main/install.sh | bash
 ```
 
-All binaries are **code-signed and notarized** by Apple. No security warnings.
+The installer automatically handles macOS security settings.
 
 ## Manual Installation
 
@@ -16,14 +16,14 @@ Download from [GitHub Releases](https://github.com/sprited-ai/fenn/releases)
 
 1. Download `fenn-v0.1.0-macos.tar.gz`
 2. Extract: `tar -xzf fenn-v0.1.0-macos.tar.gz`
-3. Make executable: `chmod +x fenn`
-4. Move to PATH: `mv fenn ~/.local/bin/`
+3. **Remove quarantine flag**:
+   ```bash
+   xattr -d com.apple.quarantine fenn
+   ```
+4. Make executable: `chmod +x fenn`
+5. Move to PATH: `mv fenn ~/.local/bin/`
 
-**Verify signature** (optional):
-```bash
-codesign --verify --verbose fenn
-spctl -a -vv fenn
-```
+**Alternative**: Right-click binary → "Open" → Click "Open" when prompted
 
 ### Linux
 
