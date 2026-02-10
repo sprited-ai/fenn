@@ -62,12 +62,12 @@ export default function App() {
           }}>
             <Box>
               <Heading 
-                size="9"
                 css={{ 
                   fontSize: "46px",
                   lineHeight: "1.06",
                   letterSpacing: "-0.9px",
                   marginBottom: "10px",
+                  fontWeight: "700",
                   "@media (max-width: 900px)": {
                     fontSize: "38px"
                   }
@@ -76,11 +76,11 @@ export default function App() {
                 A financial tool that runs on your machine.
               </Heading>
               <Text 
-                size="3" 
                 css={{ 
                   display: "block",
                   marginBottom: "18px",
                   color: "var(--gray-11)",
+                  fontSize: "16px",
                   lineHeight: "1.65",
                   maxWidth: "62ch"
                 }}
@@ -93,11 +93,11 @@ export default function App() {
                 <Button size="3" variant="outline">Read setup</Button>
               </Flex>
               <Text 
-                size="1" 
                 css={{ 
                   display: "block",
                   marginTop: "14px",
-                  color: "var(--gray-11)"
+                  color: "var(--gray-11)",
+                  fontSize: "12px"
                 }}
               >
                 <strong>Note:</strong> Fenn is not affiliated with or endorsed by Fidelity, Chase, Wells Fargo, or other institutions.
@@ -126,7 +126,7 @@ export default function App() {
                   >
                     Quickstart
                   </Box>
-                  <Text size="1" css={{ color: "var(--gray-11)" }}>
+                  <Text css={{ fontSize: "12px", color: "var(--gray-11)" }}>
                     Install without Homebrew
                   </Text>
                 </Flex>
@@ -141,11 +141,11 @@ export default function App() {
                 }}
               >
                 <Code 
-                  size="2"
                   css={{ 
                     display: "block",
                     whiteSpace: "pre",
                     fontFamily: "ui-monospace, monospace",
+                    fontSize: "12.5px",
                     lineHeight: "1.6"
                   }}
                 >
@@ -162,7 +162,7 @@ fenn sync
 fenn report --format html`}
                 </Code>
               </Box>
-              <Text size="1" css={{ color: "var(--gray-11)", lineHeight: "1.55" }}>
+              <Text css={{ fontSize: "12px", color: "var(--gray-11)", lineHeight: "1.55" }}>
                 Prefer binaries? Ship signed downloads later via GitHub Releases (macOS / Windows / Linux).
               </Text>
             </Card>
@@ -184,12 +184,13 @@ fenn report --format html`}
           {/* What is Fenn */}
           <Card css={{ boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)" }}>
             <Heading 
-              size="4" 
               css={{ 
+                fontSize: "14px",
                 marginBottom: "10px",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "10px"
+                gap: "10px",
+                letterSpacing: "0.2px"
               }}
             >
               <Box 
@@ -203,15 +204,15 @@ fenn report --format html`}
               />
               What is Fenn?
             </Heading>
-            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
+            <Text as="p" css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
               Fenn lets you securely retrieve and organize your personal financial data across connected institutions —
               while keeping that data under your control.
             </Text>
-            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
+            <Text as="p" css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
               Unlike traditional cloud dashboards, Fenn operates on your device. Portfolio data is stored and processed locally,
               allowing you to generate reports, analyze trends, and maintain your financial history without relying on a centralized service.
             </Text>
-            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
+            <Text as="p" css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
               Fenn connects through secure provider authorization flows using read-only access. Banking credentials are never requested or stored by Fenn.
             </Text>
             <Box 
@@ -224,19 +225,20 @@ fenn report --format html`}
                 color: "#2a2a35"
               }}
             >
-              <Text size="2">your financial data remains yours.</Text>
+              <Text css={{ fontSize: "14px" }}>your financial data remains yours.</Text>
             </Box>
           </Card>
 
           {/* How it works */}
           <Card css={{ boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)" }}>
             <Heading 
-              size="4" 
               css={{ 
+                fontSize: "14px",
                 marginBottom: "10px",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "10px"
+                gap: "10px",
+                letterSpacing: "0.2px"
               }}
             >
               <Box 
@@ -250,7 +252,7 @@ fenn report --format html`}
               />
               How it works
             </Heading>
-            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
+            <Text as="p" css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
               Fenn follows a device-managed workflow:
             </Text>
             <Box as="ul" css={{ margin: "10px 0 0", padding: 0, listStyle: "none" }}>
@@ -271,11 +273,11 @@ fenn report --format html`}
                       flexShrink: 0
                     }} 
                   />
-                  <Text size="2" css={{ color: "var(--gray-11)", lineHeight: "1.7" }}>{item}</Text>
+                  <Text css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.7" }}>{item}</Text>
                 </Flex>
               ))}
             </Box>
-            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginTop: "12px" }}>
+            <Text as="p" css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.65", marginTop: "12px" }}>
               Fenn services retain only the minimal metadata necessary for authentication and connection management.
               Financial records remain stored on your machine by default.
             </Text>
@@ -297,12 +299,13 @@ fenn report --format html`}
           {/* Security & Privacy */}
           <Card css={{ boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)" }}>
             <Heading 
-              size="4" 
               css={{ 
+                fontSize: "14px",
                 marginBottom: "10px",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "10px"
+                gap: "10px",
+                letterSpacing: "0.2px"
               }}
             >
               <Box 
@@ -334,7 +337,7 @@ fenn report --format html`}
                       flexShrink: 0
                     }} 
                   />
-                  <Text size="2" css={{ color: "var(--gray-11)", lineHeight: "1.7" }}>{item}</Text>
+                  <Text css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.7" }}>{item}</Text>
                 </Flex>
               ))}
             </Box>
@@ -343,12 +346,13 @@ fenn report --format html`}
           {/* Setup */}
           <Card css={{ boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)" }}>
             <Heading 
-              size="4" 
               css={{ 
+                fontSize: "14px",
                 marginBottom: "10px",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "10px"
+                gap: "10px",
+                letterSpacing: "0.2px"
               }}
             >
               <Box 
@@ -362,11 +366,11 @@ fenn report --format html`}
               />
               Setup
             </Heading>
-            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
+            <Text as="p" css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
               If you're evaluating Fenn, start with the setup guide and connection requirements.
               You can keep this page minimal and link to a single "Get Started" doc.
             </Text>
-            <Text as="p" size="2">
+            <Text as="p" css={{ fontSize: "14px" }}>
               <Link href="/get-started.html">Get Started →</Link>
             </Text>
           </Card>
@@ -389,10 +393,10 @@ fenn report --format html`}
           }}
         >
           <Box css={{ maxWidth: "70ch" }}>
-            <Text weight="bold" css={{ display: "block", marginBottom: "4px", letterSpacing: "0.2px" }}>
+            <Text weight="bold" css={{ display: "block", marginBottom: "4px", letterSpacing: "0.2px", fontSize: "14px" }}>
               Invite-only preview
             </Text>
-            <Text size="2" css={{ color: "var(--gray-11)", lineHeight: "1.6" }}>
+            <Text css={{ fontSize: "14px", color: "var(--gray-11)", lineHeight: "1.6" }}>
               Fenn is currently in controlled preview as we refine security, reliability, and institutional integrations.
               Reviewers or institutions evaluating the platform may request access.
             </Text>
@@ -414,13 +418,13 @@ fenn report --format html`}
             flexWrap: "wrap"
           }}
         >
-          <Text size="1" css={{ color: "var(--gray-11)" }}>
+          <Text css={{ fontSize: "12px", color: "var(--gray-11)" }}>
             Sprited • All rights reserved
           </Text>
           <Flex gap="3" css={{ flexWrap: "wrap" }}>
-            <Link href={TERMS_URL} size="1">Terms</Link>
-            <Link href={PRIVACY_URL} size="1">Privacy</Link>
-            <Link href="mailto:support@sprited.app" size="1">Support</Link>
+            <Link href={TERMS_URL} css={{ fontSize: "12px" }}>Terms</Link>
+            <Link href={PRIVACY_URL} css={{ fontSize: "12px" }}>Privacy</Link>
+            <Link href="mailto:support@sprited.app" css={{ fontSize: "12px" }}>Support</Link>
           </Flex>
         </Flex>
       </Container>
