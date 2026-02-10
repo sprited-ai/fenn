@@ -1,11 +1,12 @@
-import { css } from "@emotion/react";
-import { Theme, Container, Flex, Box, Heading, Text, Button, Link, Code } from "@radix-ui/themes";
+import { Theme, Container, Flex, Box, Heading, Text, Button, Link, Card, Code } from "@radix-ui/themes";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import { TERMS_URL, PRIVACY_URL } from "./legal-urls";
 
 export default function App() {
   return (
     <Theme
+      accentColor="purple"
+      grayColor="slate"
       css={{
         minHeight: "100%",
         display: "flex",
@@ -13,186 +14,407 @@ export default function App() {
       }}
     >
       <Container 
-        size="3" 
+        size="4"
         css={{ 
           flex: 1,
-          display: "flex", 
-          flexDirection: "column",
-          padding: "32px 24px"
+          padding: "28px 20px 72px"
         }}
       >
-        {/* Header */}
+        {/* Top Bar */}
         <Flex 
           justify="between" 
           align="center" 
+          gap="4"
           css={{ 
-            paddingBottom: "32px"
+            paddingBottom: "26px",
+            paddingTop: "10px"
           }}
         >
           <Flex align="center" gap="3">
             <img 
               src="/fenn-logo-horizontal.svg" 
               alt="Fenn" 
-              style={{ height: "40px", width: "auto" }} 
+              style={{ height: "36px", width: "auto" }} 
             />
           </Flex>
-          <Button size="3" variant="solid">
+          <Button size="2" variant="solid">
             <DownloadIcon />
             Download
           </Button>
         </Flex>
 
         {/* Hero Section */}
-        <Flex 
-          direction="column" 
-          align="center" 
-          css={{ 
-            paddingTop: "80px",
-            paddingBottom: "80px",
-            textAlign: "center"
-          }}
-        >
-          <Heading 
-            size="8" 
-            weight="bold" 
-            css={{ 
-              marginBottom: "24px",
-              fontSize: "48px",
-              lineHeight: "1.2"
-            }}
-          >
-            A financial tool that runs on your machine.
-          </Heading>
-          <Box css={{ height: "2px", width: "60px", backgroundColor: "var(--accent-9)", marginBottom: "32px" }} />
-          <Button size="4" variant="solid" css={{ paddingLeft: "32px", paddingRight: "32px" }}>
-            <DownloadIcon />
-            Download Fenn
-          </Button>
-        </Flex>
+        <Box css={{ paddingTop: "34px", paddingBottom: "18px" }}>
+          <Box css={{ 
+            display: "grid",
+            gridTemplateColumns: "1.2fr 0.8fr",
+            gap: "26px",
+            alignItems: "start",
+            "@media (max-width: 900px)": {
+              gridTemplateColumns: "1fr"
+            }
+          }}>
+            <Box>
+              <Heading 
+                size="9"
+                css={{ 
+                  fontSize: "46px",
+                  lineHeight: "1.06",
+                  letterSpacing: "-0.9px",
+                  marginBottom: "10px",
+                  "@media (max-width: 900px)": {
+                    fontSize: "38px"
+                  }
+                }}
+              >
+                A financial tool that runs on your machine.
+              </Heading>
+              <Text 
+                size="3" 
+                css={{ 
+                  display: "block",
+                  marginBottom: "18px",
+                  color: "var(--gray-11)",
+                  lineHeight: "1.65",
+                  maxWidth: "62ch"
+                }}
+              >
+                Fenn securely retrieves and organizes your personal financial data across connected institutions —
+                while keeping that data under your control.
+              </Text>
+              <Flex gap="2" css={{ marginTop: "10px", flexWrap: "wrap" }}>
+                <Button size="3" variant="solid">Get Fenn</Button>
+                <Button size="3" variant="outline">Read setup</Button>
+              </Flex>
+              <Text 
+                size="1" 
+                css={{ 
+                  display: "block",
+                  marginTop: "14px",
+                  color: "var(--gray-11)"
+                }}
+              >
+                <strong>Note:</strong> Fenn is not affiliated with or endorsed by Fidelity, Chase, Wells Fargo, or other institutions.
+              </Text>
+            </Box>
 
-        {/* Main Content */}
-        <Flex 
-          direction="column" 
+            {/* Quickstart Card */}
+            <Card 
+              css={{ 
+                backgroundColor: "rgba(251, 251, 253, 0.9)",
+                boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)"
+              }}
+            >
+              <Flex justify="between" align="center" css={{ marginBottom: "12px" }}>
+                <Flex align="center" gap="2">
+                  <Box 
+                    css={{ 
+                      fontSize: "12px",
+                      padding: "4px 10px",
+                      border: "1px solid rgba(58,51,74,0.20)",
+                      color: "var(--accent-9)",
+                      borderRadius: "999px",
+                      background: "rgba(58,51,74,0.06)",
+                      fontWeight: "600"
+                    }}
+                  >
+                    Quickstart
+                  </Box>
+                  <Text size="1" css={{ color: "var(--gray-11)" }}>
+                    Install without Homebrew
+                  </Text>
+                </Flex>
+              </Flex>
+              <Box 
+                css={{ 
+                  padding: "14px",
+                  background: "linear-gradient(180deg, rgba(58,51,74,0.03), rgba(58,51,74,0.00))",
+                  borderRadius: "8px",
+                  marginBottom: "12px",
+                  overflow: "auto"
+                }}
+              >
+                <Code 
+                  size="2"
+                  css={{ 
+                    display: "block",
+                    whiteSpace: "pre",
+                    fontFamily: "ui-monospace, monospace",
+                    lineHeight: "1.6"
+                  }}
+                >
+{`# Install pipx (recommended for Python CLIs)
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+
+# Install Fenn
+pipx install fenn
+
+# Connect + sync
+fenn connect
+fenn sync
+fenn report --format html`}
+                </Code>
+              </Box>
+              <Text size="1" css={{ color: "var(--gray-11)", lineHeight: "1.55" }}>
+                Prefer binaries? Ship signed downloads later via GitHub Releases (macOS / Windows / Linux).
+              </Text>
+            </Card>
+          </Box>
+        </Box>
+
+        {/* Main Grid Sections */}
+        <Box 
           css={{ 
-            flex: 1,
-            paddingTop: "64px",
-            paddingBottom: "64px",
-            gap: "96px"
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "16px",
+            marginTop: "22px",
+            "@media (max-width: 900px)": {
+              gridTemplateColumns: "1fr"
+            }
           }}
         >
-          {/* What is Fenn? */}
-          <Box css={{ maxWidth: "720px", margin: "0 auto" }}>
-            <Heading size="6" mb="5" css={{ fontWeight: "600" }}>What is Fenn?</Heading>
-            <Text as="p" size="4" css={{ lineHeight: "1.8", marginBottom: "20px", color: "var(--gray-12)" }}>
-              Fenn lets you securely retrieve and organize your personal financial data across connected institutions — while keeping that data under your control.
+          {/* What is Fenn */}
+          <Card css={{ boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)" }}>
+            <Heading 
+              size="4" 
+              css={{ 
+                marginBottom: "10px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px"
+              }}
+            >
+              <Box 
+                css={{ 
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "3px",
+                  background: "var(--accent-9)",
+                  boxShadow: "0 6px 14px rgba(58,51,74,0.18)"
+                }} 
+              />
+              What is Fenn?
+            </Heading>
+            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
+              Fenn lets you securely retrieve and organize your personal financial data across connected institutions —
+              while keeping that data under your control.
             </Text>
-            <Text as="p" size="4" css={{ lineHeight: "1.8", marginBottom: "20px", color: "var(--gray-12)" }}>
-              Unlike traditional cloud dashboards, Fenn operates on your device. Portfolio data is stored and processed locally, allowing you to generate reports, analyze trends, and maintain your financial history without relying on a centralized service.
+            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
+              Unlike traditional cloud dashboards, Fenn operates on your device. Portfolio data is stored and processed locally,
+              allowing you to generate reports, analyze trends, and maintain your financial history without relying on a centralized service.
             </Text>
-            <Text as="p" size="4" css={{ lineHeight: "1.8", marginBottom: "20px", color: "var(--gray-12)" }}>
+            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
               Fenn connects through secure provider authorization flows using read-only access. Banking credentials are never requested or stored by Fenn.
             </Text>
             <Box 
-              as="blockquote" 
+              as="blockquote"
               css={{ 
-                marginTop: "32px",
-                paddingLeft: "24px",
-                borderLeft: "3px solid var(--accent-9)",
-                fontStyle: "italic"
+                borderLeft: "2px solid rgba(58,51,74,0.35)",
+                paddingLeft: "12px",
+                margin: "12px 0 0",
+                fontStyle: "italic",
+                color: "#2a2a35"
               }}
             >
-              <Text size="4" css={{ color: "var(--gray-11)" }}>
-                your financial data remains yours.
-              </Text>
+              <Text size="2">your financial data remains yours.</Text>
             </Box>
-          </Box>
+          </Card>
 
           {/* How it works */}
-          <Box 
-            css={{ 
-              maxWidth: "720px", 
-              margin: "0 auto",
-              padding: "48px",
-              backgroundColor: "var(--gray-a2)",
-              borderRadius: "8px"
-            }}
-          >
-            <Heading size="6" mb="5" css={{ fontWeight: "600" }}>How it works</Heading>
-            <Text as="p" size="4" css={{ lineHeight: "1.8", marginBottom: "24px", color: "var(--gray-12)" }}>
-              Fenn follows a device-managed workflow:
-            </Text>
-            <Flex direction="column" gap="3" css={{ marginBottom: "32px" }}>
-              <Text as="p" size="4" css={{ lineHeight: "1.8" }}>
-                • Install Fenn on your computer
-              </Text>
-              <Text as="p" size="4" css={{ lineHeight: "1.8" }}>
-                • Link accounts through secure authorization providers
-              </Text>
-              <Text as="p" size="4" css={{ lineHeight: "1.8" }}>
-                • Sync financial data directly to your device
-              </Text>
-              <Text as="p" size="4" css={{ lineHeight: "1.8" }}>
-                • Generate reports and insights locally
-              </Text>
-            </Flex>
-            <Box 
+          <Card css={{ boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)" }}>
+            <Heading 
+              size="4" 
               css={{ 
-                padding: "16px 20px",
-                backgroundColor: "var(--gray-a3)",
-                borderRadius: "6px",
-                border: "1px solid var(--gray-a5)",
-                marginBottom: "24px"
+                marginBottom: "10px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px"
               }}
             >
-              <Code size="3" css={{ fontFamily: "monospace", color: "var(--gray-12)" }}>
-                $ fenn sync --provider snaptrade
-              </Code>
+              <Box 
+                css={{ 
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "3px",
+                  background: "var(--accent-9)",
+                  boxShadow: "0 6px 14px rgba(58,51,74,0.18)"
+                }} 
+              />
+              How it works
+            </Heading>
+            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
+              Fenn follows a device-managed workflow:
+            </Text>
+            <Box as="ul" css={{ margin: "10px 0 0", padding: 0, listStyle: "none" }}>
+              {[
+                "Install Fenn on your computer",
+                "Link accounts through secure authorization providers",
+                "Sync financial data directly to your device",
+                "Generate reports and insights locally"
+              ].map((item, i) => (
+                <Flex key={i} gap="2" css={{ margin: "8px 0" }}>
+                  <Box 
+                    css={{ 
+                      width: "8px",
+                      height: "8px",
+                      borderRadius: "999px",
+                      background: "rgba(58,51,74,0.35)",
+                      marginTop: "8px",
+                      flexShrink: 0
+                    }} 
+                  />
+                  <Text size="2" css={{ color: "var(--gray-11)", lineHeight: "1.7" }}>{item}</Text>
+                </Flex>
+              ))}
             </Box>
-            <Text as="p" size="3" css={{ lineHeight: "1.7", color: "var(--gray-11)" }}>
-              Fenn services retain only the minimal metadata necessary for authentication and connection management. Financial records remain stored on your machine by default.
+            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginTop: "12px" }}>
+              Fenn services retain only the minimal metadata necessary for authentication and connection management.
+              Financial records remain stored on your machine by default.
             </Text>
-          </Box>
+          </Card>
+        </Box>
 
-          {/* Invite-only preview */}
-          <Box 
-            css={{ 
-              maxWidth: "720px",
-              margin: "0 auto",
-              padding: "48px",
-              border: "1px solid var(--gray-a6)",
-              borderRadius: "8px"
-            }}
-          >
-            <Heading size="6" mb="4" css={{ fontWeight: "600" }}>Invite-only preview</Heading>
-            <Text as="p" size="4" css={{ lineHeight: "1.8", marginBottom: "20px", color: "var(--gray-12)" }}>
+        {/* Second Grid Row */}
+        <Box 
+          css={{ 
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "16px",
+            marginTop: "16px",
+            "@media (max-width: 900px)": {
+              gridTemplateColumns: "1fr"
+            }
+          }}
+        >
+          {/* Security & Privacy */}
+          <Card css={{ boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)" }}>
+            <Heading 
+              size="4" 
+              css={{ 
+                marginBottom: "10px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px"
+              }}
+            >
+              <Box 
+                css={{ 
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "3px",
+                  background: "var(--accent-9)",
+                  boxShadow: "0 6px 14px rgba(58,51,74,0.18)"
+                }} 
+              />
+              Security & privacy
+            </Heading>
+            <Box as="ul" css={{ margin: "10px 0 0", padding: 0, listStyle: "none" }}>
+              {[
+                "Read-only access via secure authorization flows",
+                "No banking credentials stored by Fenn",
+                "Local storage by default (you control your data)",
+                "Disconnect any time"
+              ].map((item, i) => (
+                <Flex key={i} gap="2" css={{ margin: "8px 0" }}>
+                  <Box 
+                    css={{ 
+                      width: "8px",
+                      height: "8px",
+                      borderRadius: "999px",
+                      background: "rgba(58,51,74,0.35)",
+                      marginTop: "8px",
+                      flexShrink: 0
+                    }} 
+                  />
+                  <Text size="2" css={{ color: "var(--gray-11)", lineHeight: "1.7" }}>{item}</Text>
+                </Flex>
+              ))}
+            </Box>
+          </Card>
+
+          {/* Setup */}
+          <Card css={{ boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)" }}>
+            <Heading 
+              size="4" 
+              css={{ 
+                marginBottom: "10px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px"
+              }}
+            >
+              <Box 
+                css={{ 
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "3px",
+                  background: "var(--accent-9)",
+                  boxShadow: "0 6px 14px rgba(58,51,74,0.18)"
+                }} 
+              />
+              Setup
+            </Heading>
+            <Text as="p" size="2" css={{ color: "var(--gray-11)", lineHeight: "1.65", marginBottom: "10px" }}>
+              If you're evaluating Fenn, start with the setup guide and connection requirements.
+              You can keep this page minimal and link to a single "Get Started" doc.
+            </Text>
+            <Text as="p" size="2">
+              <Link href="/get-started.html">Get Started →</Link>
+            </Text>
+          </Card>
+        </Box>
+
+        {/* Invite Section */}
+        <Box 
+          css={{ 
+            marginTop: "16px",
+            padding: "18px",
+            borderRadius: "16px",
+            border: "1px solid rgba(58,51,74,0.25)",
+            background: "linear-gradient(180deg, rgba(58,51,74,0.08), rgba(58,51,74,0.03))",
+            boxShadow: "0 10px 30px rgba(17, 17, 24, 0.06)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "14px",
+            flexWrap: "wrap"
+          }}
+        >
+          <Box css={{ maxWidth: "70ch" }}>
+            <Text weight="bold" css={{ display: "block", marginBottom: "4px", letterSpacing: "0.2px" }}>
+              Invite-only preview
+            </Text>
+            <Text size="2" css={{ color: "var(--gray-11)", lineHeight: "1.6" }}>
               Fenn is currently in controlled preview as we refine security, reliability, and institutional integrations.
+              Reviewers or institutions evaluating the platform may request access.
             </Text>
-            <Text as="p" size="4" css={{ lineHeight: "1.8", marginBottom: "20px", color: "var(--gray-12)" }}>
-              Reviewers or institutions evaluating the platform may request access by contacting:
-            </Text>
-            <Link href="mailto:support@sprited.app" size="4" weight="medium">
-              support@sprited.app
-            </Link>
           </Box>
-        </Flex>
+          <Button size="2" variant="solid" asChild>
+            <a href="mailto:support@sprited.app">Contact support@sprited.app</a>
+          </Button>
+        </Box>
 
         {/* Footer */}
         <Flex 
           justify="between" 
           align="center"
+          gap="4"
           css={{ 
-            paddingTop: "48px",
+            marginTop: "40px",
+            paddingTop: "18px",
             borderTop: "1px solid var(--gray-a5)",
-            marginTop: "64px"
+            flexWrap: "wrap"
           }}
         >
-          <Text size="2" css={{ color: "var(--gray-11)" }}>
+          <Text size="1" css={{ color: "var(--gray-11)" }}>
             Sprited • All rights reserved
           </Text>
-          <Flex gap="4">
-            <Link href={TERMS_URL} size="2" css={{ color: "var(--gray-11)" }}>Terms</Link>
-            <Link href={PRIVACY_URL} size="2" css={{ color: "var(--gray-11)" }}>Privacy</Link>
-            <Link href="mailto:support@sprited.app" size="2" css={{ color: "var(--gray-11)" }}>Support</Link>
+          <Flex gap="3" css={{ flexWrap: "wrap" }}>
+            <Link href={TERMS_URL} size="1">Terms</Link>
+            <Link href={PRIVACY_URL} size="1">Privacy</Link>
+            <Link href="mailto:support@sprited.app" size="1">Support</Link>
           </Flex>
         </Flex>
       </Container>
