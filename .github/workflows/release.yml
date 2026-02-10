@@ -1,0 +1,68 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip pyinstaller
+          cd cli
+          python -m pip install -e .
+
+      - name: Build binary
+        run: |
+          cd cli
+          pyinstaller -n fenn --onefile fenn/__main__.py
+
+      - name: Package
+        shell: bash
+        run: |
+          mkdir -p out
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            cp cli/dist/fenn.exe out/
+          else
+            cp cli/dist/fenn out/
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fenn-${{ runner.os }}
+          path: out/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create release assets
+        run: |
+          ls -R artifacts
+          mkdir -p release
+          tar -czf release/fenn-${GITHUB_REF_NAME}-macos.tar.gz -C artifacts/fenn-macOS fenn || true
+          tar -czf release/fenn-${GITHUB_REF_NAME}-linux.tar.gz -C artifacts/fenn-Linux fenn || true
+          (cd artifacts/fenn-Windows && zip -r ../../release/fenn-${GITHUB_REF_NAME}-windows.zip fenn.exe) || true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: release/*
