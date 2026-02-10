@@ -2,14 +2,22 @@
 
 ## Binary Distribution
 
-Fenn binaries are currently **not code-signed**. This is common for open-source tools. 
+**macOS Users:** We recommend installing via Homebrew, which handles security transparently:
+```bash
+brew tap sprited-ai/fenn
+brew install fenn
+```
+
+Homebrew is a trusted source on macOS and won't trigger security warnings.
+
+**Direct Downloads:** Binaries are currently **not code-signed**. This is common for open-source tools. 
 
 **Why no code signing?**
 - Apple Developer Program costs $99/year
-- Many respected OSS tools (Homebrew, etc.) started without signing
+- Many respected OSS tools (Homebrew itself!) started without signing
 - Our transparent build process provides integrity verification
 
-**macOS Security Note**: When downloading, macOS may show a warning. The installer handles this automatically, or you can manually approve via: `xattr -d com.apple.quarantine fenn`
+**macOS Security Note**: When downloading directly, macOS may show a warning. The curl installer handles this automatically, or you can manually approve via: `xattr -d com.apple.quarantine fenn`
 
 ## Data Security
 

@@ -1,6 +1,20 @@
 # Installation Guide
 
-## Quick Install (Recommended)
+## macOS (Recommended)
+
+### Using Homebrew
+
+```bash
+brew tap sprited-ai/fenn
+brew install fenn
+```
+
+**Benefits:**
+- ✅ No security warnings (Homebrew is trusted by macOS)
+- ✅ Automatic updates with `brew upgrade`
+- ✅ Clean uninstall with `brew uninstall fenn`
+
+### Using curl
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sprited-ai/fenn/main/install.sh | bash
