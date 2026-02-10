@@ -73,7 +73,7 @@ jobs:
     steps:
       - name: Update Homebrew tap
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
           
@@ -82,7 +82,7 @@ jobs:
           SHA256=$(shasum -a 256 fenn.tar.gz | awk '{print $1}')
           
           # Clone tap repo
-          git clone https://x-access-token:${GITHUB_TOKEN}@github.com/sprited-ai/homebrew-fenn.git
+          git clone https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/sprited-ai/homebrew-fenn.git
           cd homebrew-fenn
           
           # Create Formula directory if it doesn't exist
