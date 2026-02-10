@@ -4,6 +4,9 @@
 venv/
 env/
 
+# Wrangler
+.wrangler/
+
 # Node
 node_modules/
 dist/
