@@ -91,9 +91,19 @@ export default function App() {
             />
             <h1>Fenn</h1>
           </Flex>
-          <Button size="2" variant="solid">
-            <DownloadIcon />
-            Download
+          <Button 
+            size="2" 
+            variant="solid"
+            asChild
+          >
+            <Link 
+              href="https://github.com/sprited-ai/fenn/releases" 
+              target="_blank"
+              css={{ textDecoration: "none" }}
+            >
+              <DownloadIcon />
+              Download
+            </Link>
           </Button>
         </Flex>
 
@@ -137,8 +147,24 @@ export default function App() {
                 while keeping that data under your control.
               </Text>
               <Flex gap="2" css={{ marginTop: "10px", flexWrap: "wrap" }}>
-                <Button size="3" variant="solid">Get Fenn</Button>
-                <Button size="3" variant="outline">Read setup</Button>
+                <Button size="3" variant="solid" asChild>
+                  <Link 
+                    href="https://github.com/sprited-ai/fenn/releases" 
+                    target="_blank"
+                    css={{ textDecoration: "none" }}
+                  >
+                    Get Fenn
+                  </Link>
+                </Button>
+                <Button size="3" variant="outline" asChild>
+                  <Link 
+                    href="https://github.com/sprited-ai/fenn/blob/main/INSTALL.md" 
+                    target="_blank"
+                    css={{ textDecoration: "none" }}
+                  >
+                    Read setup
+                  </Link>
+                </Button>
               </Flex>
               <Text 
                 css={{ 
@@ -175,7 +201,7 @@ export default function App() {
                     Quickstart
                   </Box>
                   <Text size="1" css={{ color: "var(--gray-11)" }}>
-                    Install without Homebrew
+                    macOS / Linux
                   </Text>
                 </Flex>
               </Flex>
@@ -200,21 +226,20 @@ export default function App() {
                     background: "transparent",
                   }}
                 >
-{`# Install pipx (recommended for Python CLIs)
-python3 -m pip install --user pipx
-python3 -m pipx ensurepath
+{`# macOS - Homebrew (recommended)
+brew tap sprited-ai/fenn
+brew install fenn
 
-# Install Fenn
-pipx install fenn
+# Or: One-line installer (macOS/Linux)
+curl -fsSL https://raw.githubusercontent.com/sprited-ai/fenn/main/install.sh | bash
 
 # Connect + sync
 fenn connect
-fenn sync
-fenn report --format html`}
+fenn sync`}
                 </Code>
               </Box>
               <Text css={{ fontSize: "12px", color: "var(--gray-11)", lineHeight: "1.55" }}>
-                Prefer binaries? Ship signed downloads later via GitHub Releases (macOS / Windows / Linux).
+                Prebuilt binaries available for macOS, Linux, and Windows via <Link href="https://github.com/sprited-ai/fenn/releases" target="_blank" css={{ fontWeight: "500" }}>GitHub Releases</Link>.
               </Text>
             </Card>
           </Box>
