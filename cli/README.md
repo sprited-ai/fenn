@@ -16,6 +16,8 @@ Fenn maintains an accurate local snapshot of your brokerage portfolio data from 
 
 **Purpose**: Read-only portfolio visibility and inspection. No trading, no modifications—just clean, reliable data.
 
+**Platform**: macOS only
+
 ### Features
 
 - 📊 Download portfolio data from multiple brokers
@@ -23,6 +25,19 @@ Fenn maintains an accurate local snapshot of your brokerage portfolio data from 
 - 🔍 Cross-broker portfolio view
 - 🔒 Secure credential management via environment variables
 - 📈 Risk and allocation analysis ready
+
+## Installation
+
+### Homebrew (Recommended)
+
+```bash
+brew tap sprited-ai/fenn
+brew install fenn
+```
+
+### Manual Installation
+
+See [INSTALL.md](../INSTALL.md) for alternative installation methods.
 
 ## Quick Start
 
@@ -53,7 +68,7 @@ Since you're using the free tier, you'll need to connect your brokers through Sn
 
 1. Run the first sync (it will create your user):
    ```bash
-   python fenn.py sync
+   fenn sync
    ```
 
 2. Get your connection URL by using the SnapTrade dashboard or API
@@ -64,13 +79,13 @@ Since you're using the free tier, you'll need to connect your brokers through Sn
 
 ```bash
 # Download and sync portfolio data
-python fenn.py sync
+fenn sync
 
 # View current portfolio status
-python fenn.py status
+fenn status
 
 # Export data to a file
-python fenn.py export -o my_portfolio.json
+fenn export -o my_portfolio.json
 ```
 
 ## Architecture
