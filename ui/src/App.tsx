@@ -17,6 +17,53 @@ export default function App() {
         "--accent-11": "#1f1b26"
       }}
     >
+      {/* Early Access Banner */}
+      <Box 
+        css={{ 
+          background: "linear-gradient(135deg, #3a334a 0%, #2f2938 100%)",
+          padding: "20px",
+          textAlign: "center",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+          position: "sticky",
+          top: 0,
+          zIndex: 1000,
+          borderBottom: "3px solid #1f1b26"
+        }}
+      >
+        <Flex 
+          direction="column"
+          align="center" 
+          gap="2"
+        >
+          <Flex align="center" gap="3" css={{ flexWrap: "wrap", justifyContent: "center" }}>
+            <Box 
+              css={{ 
+                background: "rgba(255, 255, 255, 0.15)",
+                padding: "6px 16px",
+                borderRadius: "6px",
+                fontWeight: "700",
+                fontSize: "13px",
+                letterSpacing: "1.5px",
+                color: "#fff",
+                textTransform: "uppercase"
+              }}
+            >
+              Early Access
+            </Box>
+            <Text 
+              size="3" 
+              css={{ 
+                color: "rgba(255, 255, 255, 0.95)",
+                fontWeight: "500",
+                letterSpacing: "0.3px"
+              }}
+            >
+              Fenn is in active development — expect rough edges
+            </Text>
+          </Flex>
+        </Flex>
+      </Box>
+
       <Container 
         size="4"
         css={{ 
