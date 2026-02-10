@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fenn — A financial tool that runs on your machine</title>
+    <meta
+      name="description"
+      content="Fenn lets you securely retrieve and organize your personal financial data across connected institutions — while keeping that data under your control."
+    />
+
+    <style>
+      :root {
+        /* Accent: quiet, premium, reviewer-friendly */
+        --accent: #3a334a; /* charcoal violet */
+        --accent-2: #2f3a5f; /* slate blue (optional alt) */
+
+        --bg: #ffffff;
+        --panel: #fbfbfd;
+        --ink: #111118;
+        --muted: #5c5c6a;
+        --border: #e6e6ee;
+
+        --radius: 16px;
+        --shadow: 0 10px 30px rgba(17, 17, 24, 0.06);
+        --max: 980px;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        color: var(--ink);
+        background: radial-gradient(1200px 600px at 50% -200px, rgba(58,51,74,0.08), transparent 60%),
+                    var(--bg);
+      }
+
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      .wrap { max-width: var(--max); margin: 0 auto; padding: 28px 20px 72px; }
+
+      /* Top bar */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 0 26px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 200px;
+      }
+
+      .mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        background: var(--accent);
+        display: grid;
+        place-items: center;
+        color: white;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        box-shadow: 0 8px 18px rgba(58, 51, 74, 0.22);
+      }
+
+      .brand h1 {
+        font-size: 16px;
+        margin: 0;
+        letter-spacing: 0.2px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: var(--muted);
+        font-size: 13px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--ink);
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .btn:hover { border-color: rgba(58,51,74,0.35); }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        border-color: rgba(58,51,74,0.25);
+        box-shadow: 0 10px 22px rgba(58,51,74,0.18);
+      }
+      .btn-primary:hover { filter: brightness(1.02); }
+
+      .btn .icon {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+      }
+
+      /* Hero */
+      .hero {
+        padding: 34px 0 18px;
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 26px;
+        align-items: start;
+      }
+
+      .hero h2 {
+        font-size: 46px;
+        line-height: 1.06;
+        letter-spacing: -0.9px;
+        margin: 0 0 10px;
+      }
+
+      .hero p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.65;
+        max-width: 62ch;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .disclaimer {
+        margin-top: 14px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .disclaimer strong { color: var(--ink); font-weight: 600; }
+
+      /* Right hero card */
+      .quick-card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: rgba(251, 251, 253, 0.9);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .quick-card header {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .pill {
+        font-size: 12px;
+        padding: 4px 10px;
+        border: 1px solid rgba(58,51,74,0.20);
+        color: var(--accent);
+        border-radius: 999px;
+        background: rgba(58,51,74,0.06);
+        font-weight: 600;
+      }
+
+      pre {
+        margin: 0;
+        padding: 14px 16px 16px;
+        overflow: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 12.5px;
+        line-height: 1.6;
+        color: #121217;
+        background: linear-gradient(180deg, rgba(58,51,74,0.03), rgba(58,51,74,0.00));
+      }
+
+      .note {
+        padding: 12px 16px 16px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      /* Sections */
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 22px;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        padding: 18px 18px 16px;
+      }
+
+      .card h3 {
+        margin: 0 0 10px;
+        font-size: 14px;
+        letter-spacing: 0.2px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .accent-bar {
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+        background: var(--accent);
+        box-shadow: 0 6px 14px rgba(58,51,74,0.18);
+      }
+
+      .card p {
+        margin: 0 0 10px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .quote {
+        border-left: 2px solid rgba(58,51,74,0.35);
+        padding-left: 12px;
+        margin: 12px 0 0;
+        color: #2a2a35;
+        font-style: italic;
+      }
+
+      ul.clean {
+        margin: 10px 0 0;
+        padding: 0;
+        list-style: none;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      ul.clean li {
+        display: flex;
+        gap: 10px;
+        margin: 8px 0;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(58,51,74,0.35);
+        margin-top: 8px;
+        flex: 0 0 auto;
+      }
+
+      /* Invite strip */
+      .invite {
+        margin-top: 16px;
+        padding: 18px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(58,51,74,0.25);
+        background: linear-gradient(180deg, rgba(58,51,74,0.08), rgba(58,51,74,0.03));
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .invite strong {
+        display: block;
+        margin-bottom: 4px;
+        letter-spacing: 0.2px;
+      }
+
+      .invite .left {
+        max-width: 70ch;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      /* Footer */
+      footer {
+        margin-top: 40px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        .hero { grid-template-columns: 1fr; }
+        .hero h2 { font-size: 38px; }
+        .grid { grid-template-columns: 1fr; }
+        .nav { justify-content: flex-start; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <!-- Top bar -->
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark" aria-label="Fenn logo">F</div>
+          <h1>Fenn</h1>
+        </div>
+
+        <div class="nav">
+          <a href="#how">How it works</a>
+          <a href="#security">Security</a>
+          <a href="#invite">Invite</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/privacy.html">Privacy</a>
+          <button class="btn btn-primary" type="button" onclick="alert('Wire this to your release page / installer.')">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v10m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Download
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero -->
+      <section class="hero">
+        <div>
+          <h2>A financial tool that runs on your machine.</h2>
+          <p>
+            Fenn securely retrieves and organizes your personal financial data across connected institutions —
+            while keeping that data under your control.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button" onclick="location.href='#download'">Get Fenn</button>
+            <a class="btn" href="#docs">Read setup</a>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Note:</strong> Fenn is not affiliated with or endorsed by Fidelity, Chase, Wells Fargo, or other institutions.
+          </div>
+        </div>
+
+        <aside class="quick-card" id="download">
+          <header>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="pill">Quickstart</span>
+              <span style="font-size:12px; color:var(--muted);">Install without Homebrew</span>
+            </div>
+          </header>
+          <pre><code># Install pipx (recommended for Python CLIs)
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+
+# Install Fenn
+pipx install fenn
+
+# Connect + sync
+fenn connect
+fenn sync
+fenn report --format html</code></pre>
+          <div class="note">
+            Prefer binaries? Ship signed downloads later via GitHub Releases (macOS / Windows / Linux).
+          </div>
+        </aside>
+      </section>
+
+      <!-- Main sections -->
+      <section class="grid">
+        <div class="card">
+          <h3><span class="accent-bar"></span>What is Fenn?</h3>
+          <p>
+            Fenn lets you securely retrieve and organize your personal financial data across connected institutions —
+            while keeping that data under your control.
+          </p>
+          <p>
+            Unlike traditional cloud dashboards, Fenn operates on your device. Portfolio data is stored and processed locally,
+            allowing you to generate reports, analyze trends, and maintain your financial history without relying on a centralized service.
+          </p>
+          <p>
+            Fenn connects through secure provider authorization flows using read-only access. Banking credentials are never requested or stored by Fenn.
+          </p>
+          <div class="quote">your financial data remains yours.</div>
+        </div>
+
+        <div class="card" id="how">
+          <h3><span class="accent-bar"></span>How it works</h3>
+          <p>Fenn follows a device-managed workflow:</p>
+          <ul class="clean">
+            <li><span class="dot"></span><span>Install Fenn on your computer</span></li>
+            <li><span class="dot"></span><span>Link accounts through secure authorization providers</span></li>
+            <li><span class="dot"></span><span>Sync financial data directly to your device</span></li>
+            <li><span class="dot"></span><span>Generate reports and insights locally</span></li>
+          </ul>
+          <p style="margin-top:12px;">
+            Fenn services retain only the minimal metadata necessary for authentication and connection management.
+            Financial records remain stored on your machine by default.
+          </p>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="card" id="security">
+          <h3><span class="accent-bar"></span>Security & privacy</h3>
+          <ul class="clean">
+            <li><span class="dot"></span><span>Read-only access via secure authorization flows</span></li>
+            <li><span class="dot"></span><span>No banking credentials stored by Fenn</span></li>
+            <li><span class="dot"></span><span>Local storage by default (you control your data)</span></li>
+            <li><span class="dot"></span><span>Disconnect any time</span></li>
+          </ul>
+        </div>
+
+        <div class="card" id="docs">
+          <h3><span class="accent-bar"></span>Setup</h3>
+          <p>
+            If you’re evaluating Fenn, start with the setup guide and connection requirements.
+            You can keep this page minimal and link to a single “Get Started” doc.
+          </p>
+          <p>
+            <a href="/get-started.html">Get Started →</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="invite" id="invite">
+        <div class="left">
+          <strong>Invite-only preview</strong>
+          Fenn is currently in controlled preview as we refine security, reliability, and institutional integrations.
+          Reviewers or institutions evaluating the platform may request access.
+        </div>
+        <a class="btn btn-primary" href="mailto:support@sprited.app">Contact support@sprited.app</a>
+      </section>
+
+      <footer>
+        <div>Sprited • All rights reserved</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="/terms.html">Terms</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="mailto:support@sprited.app">Support</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
