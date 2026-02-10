@@ -6,29 +6,24 @@
 curl -fsSL https://raw.githubusercontent.com/sprited-ai/fenn/main/install.sh | bash
 ```
 
-This automatically handles macOS security settings.
+All binaries are **code-signed and notarized** by Apple. No security warnings.
 
 ## Manual Installation
 
-If you download the binary manually from [GitHub Releases](https://github.com/sprited-ai/fenn/releases):
+Download from [GitHub Releases](https://github.com/sprited-ai/fenn/releases)
 
 ### macOS
 
 1. Download `fenn-v0.1.0-macos.tar.gz`
-2. Extract it: `tar -xzf fenn-v0.1.0-macos.tar.gz`
-3. **Remove quarantine flag** (important!):
-   ```bash
-   xattr -d com.apple.quarantine fenn
-   ```
-4. Make executable: `chmod +x fenn`
-5. Move to PATH: `mv fenn ~/.local/bin/`
+2. Extract: `tar -xzf fenn-v0.1.0-macos.tar.gz`
+3. Make executable: `chmod +x fenn`
+4. Move to PATH: `mv fenn ~/.local/bin/`
 
-**If you get "Apple cannot verify" error:**
+**Verify signature** (optional):
 ```bash
-xattr -d com.apple.quarantine fenn
+codesign --verify --verbose fenn
+spctl -a -vv fenn
 ```
-
-Or right-click the binary → "Open" → Click "Open" in the dialog.
 
 ### Linux
 
@@ -54,10 +49,11 @@ cd cli
 pip install -e .
 ```
 
-## Code Signing
+## Security
 
-The binaries are not code-signed. This is normal for open-source CLI tools. The install script automatically handles macOS Gatekeeper warnings.
+All macOS binaries are:
+- ✅ Code-signed with Apple Developer ID
+- ✅ Notarized by Apple
+- ✅ Built on GitHub Actions (auditable)
 
-To code-sign in the future (requires Apple Developer account - $99/year):
-- Add `codesign` step to GitHub Actions
-- Notarize with Apple
+See [SECURITY.md](SECURITY.md) for details.
