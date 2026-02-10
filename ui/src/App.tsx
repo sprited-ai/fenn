@@ -5,12 +5,16 @@ import { TERMS_URL, PRIVACY_URL } from "./legal-urls";
 export default function App() {
   return (
     <Theme
-      accentColor="purple"
+      accentColor="gray"
       grayColor="slate"
+      radius="full"
       css={{
         minHeight: "100%",
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        "--accent-9": "#3a334a",
+        "--accent-10": "#2f2938",
+        "--accent-11": "#1f1b26"
       }}
     >
       <Container 
