@@ -38,10 +38,11 @@ export default function App() {
         >
           <Flex align="center" gap="3">
             <img 
-              src="/fenn-logo-horizontal.svg" 
+              src="/fenn-logo-2.png" 
               alt="Fenn" 
-              style={{ height: "36px", width: "auto" }} 
+              style={{ height: "48px", width: "auto" }} 
             />
+            <h1>Fenn</h1>
           </Flex>
           <Button size="2" variant="solid">
             <DownloadIcon />
