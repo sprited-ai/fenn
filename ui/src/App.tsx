@@ -135,8 +135,10 @@ export default function App() {
               <Box 
                 css={{ 
                   padding: "14px",
+                  margin: "0 calc(-1 * var(--space-3))",
                   background: "linear-gradient(180deg, rgba(58,51,74,0.03), rgba(58,51,74,0.00))",
-                  borderRadius: "8px",
+                  borderRadius: "0px",
+                  borderTop: "1px solid rgba(58,51,74,0.20)",
                   marginBottom: "12px",
                   overflow: "auto"
                 }}
@@ -147,7 +149,8 @@ export default function App() {
                     whiteSpace: "pre",
                     fontFamily: "ui-monospace, monospace",
                     fontSize: "12.5px",
-                    lineHeight: "1.6"
+                    lineHeight: "1.6",
+                    background: "transparent",
                   }}
                 >
 {`# Install pipx (recommended for Python CLIs)
