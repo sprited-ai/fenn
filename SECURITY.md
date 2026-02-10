@@ -1,17 +1,15 @@
 # Security & Trust
 
-## Code Signing
+## Binary Distribution
 
-All Fenn binaries are **code-signed and notarized** with Apple:
+Fenn binaries are currently **not code-signed**. This is common for open-source tools. 
 
-- **Developer ID**: Fenn is signed with a valid Apple Developer ID
-- **Notarized**: All macOS binaries are notarized by Apple
-- **Verified**: Users can verify the signature: `codesign --verify --verbose fenn`
+**Why no code signing?**
+- Apple Developer Program costs $99/year
+- Many respected OSS tools (Homebrew, etc.) started without signing
+- Our transparent build process provides integrity verification
 
-This ensures:
-- Binary integrity (not tampered with)
-- Trusted source verification
-- No malware or security warnings
+**macOS Security Note**: When downloading, macOS may show a warning. The installer handles this automatically, or you can manually approve via: `xattr -d com.apple.quarantine fenn`
 
 ## Data Security
 

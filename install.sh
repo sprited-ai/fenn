@@ -32,6 +32,12 @@ echo "Installing to $INSTALL_DIR..."
 tar -xzf /tmp/fenn.tar.gz -C /tmp
 mv /tmp/fenn "$INSTALL_DIR/fenn"
 chmod +x "$INSTALL_DIR/fenn"
+
+# Remove macOS quarantine flag to avoid Gatekeeper warning
+if [[ "$PLATFORM" == "macos" ]]; then
+  xattr -d com.apple.quarantine "$INSTALL_DIR/fenn" 2>/dev/null || true
+fi
+
 rm /tmp/fenn.tar.gz
 
 echo ""
