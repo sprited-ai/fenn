@@ -21,7 +21,9 @@ export default function App() {
         size="4"
         css={{ 
           flex: 1,
-          padding: "28px 20px 72px"
+          padding: "28px 20px 72px",
+          maxWidth: "980px",
+          margin: "0 auto"
         }}
       >
         {/* Top Bar */}
