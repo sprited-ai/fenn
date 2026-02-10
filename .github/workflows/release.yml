@@ -66,3 +66,51 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: release/*
+
+  update-homebrew:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Homebrew tap
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          
+          # Download the macOS tarball to get SHA256
+          curl -fsSL "https://github.com/sprited-ai/fenn/releases/download/${VERSION}/fenn-${VERSION}-macos.tar.gz" -o fenn.tar.gz
+          SHA256=$(shasum -a 256 fenn.tar.gz | awk '{print $1}')
+          
+          # Clone tap repo
+          git clone https://x-access-token:${GITHUB_TOKEN}@github.com/sprited-ai/homebrew-fenn.git
+          cd homebrew-fenn
+          
+          # Create Formula directory if it doesn't exist
+          mkdir -p Formula
+          
+          # Generate the formula
+          cat > Formula/fenn.rb <<EOF
+          class Fenn < Formula
+            desc "Portfolio Download and Archive System"
+            homepage "https://github.com/sprited-ai/fenn"
+            url "https://github.com/sprited-ai/fenn/releases/download/${VERSION}/fenn-${VERSION}-macos.tar.gz"
+            sha256 "${SHA256}"
+            version "${VERSION#v}"
+          
+            def install
+              bin.install "fenn"
+            end
+          
+            test do
+              system "#{bin}/fenn", "--version"
+            end
+          end
+          EOF
+          
+          # Commit and push
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/fenn.rb
+          git commit -m "Update to ${VERSION}" || exit 0
+          git push
+
