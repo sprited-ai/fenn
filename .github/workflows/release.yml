@@ -7,10 +7,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -31,18 +28,13 @@ jobs:
           pyinstaller -n fenn --onefile fenn/__main__.py
 
       - name: Package
-        shell: bash
         run: |
           mkdir -p out
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            cp cli/dist/fenn.exe out/
-          else
-            cp cli/dist/fenn out/
-          fi
+          cp cli/dist/fenn out/
 
       - uses: actions/upload-artifact@v4
         with:
-          name: fenn-${{ runner.os }}
+          name: fenn-macOS
           path: out/*
 
   release:
@@ -59,9 +51,7 @@ jobs:
         run: |
           ls -R artifacts
           mkdir -p release
-          tar -czf release/fenn-${GITHUB_REF_NAME}-macos.tar.gz -C artifacts/fenn-macOS fenn || true
-          tar -czf release/fenn-${GITHUB_REF_NAME}-linux.tar.gz -C artifacts/fenn-Linux fenn || true
-          (cd artifacts/fenn-Windows && zip -r ../../release/fenn-${GITHUB_REF_NAME}-windows.zip fenn.exe) || true
+          tar -czf release/fenn-${GITHUB_REF_NAME}-macos.tar.gz -C artifacts/fenn-macOS fenn
 
       - uses: softprops/action-gh-release@v2
         with:

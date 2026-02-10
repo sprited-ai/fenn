@@ -1,23 +1,16 @@
 # Security & Trust
 
-## Binary Distribution
+Fenn is a **macOS-only** tool designed for secure portfolio data management.
 
-**macOS Users:** We recommend installing via Homebrew, which handles security transparently:
+## Installation
+
+**We strongly recommend installing via Homebrew:**
 ```bash
 brew tap sprited-ai/fenn
 brew install fenn
 ```
 
 Homebrew is a trusted source on macOS and won't trigger security warnings.
-
-**Direct Downloads:** Binaries are currently **not code-signed**. This is common for open-source tools. 
-
-**Why no code signing?**
-- Apple Developer Program costs $99/year
-- Many respected OSS tools (Homebrew itself!) started without signing
-- Our transparent build process provides integrity verification
-
-**macOS Security Note**: When downloading directly, macOS may show a warning. The curl installer handles this automatically, or you can manually approve via: `xattr -d com.apple.quarantine fenn`
 
 ## Data Security
 

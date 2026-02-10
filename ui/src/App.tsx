@@ -201,7 +201,7 @@ export default function App() {
                     Quickstart
                   </Box>
                   <Text size="1" css={{ color: "var(--gray-11)" }}>
-                    macOS / Linux
+                    macOS only
                   </Text>
                 </Flex>
               </Flex>
@@ -226,12 +226,9 @@ export default function App() {
                     background: "transparent",
                   }}
                 >
-{`# macOS - Homebrew (recommended)
+{`# Install via Homebrew
 brew tap sprited-ai/fenn
 brew install fenn
-
-# Or: One-line installer (macOS/Linux)
-curl -fsSL https://raw.githubusercontent.com/sprited-ai/fenn/main/install.sh | bash
 
 # Connect + sync
 fenn connect
@@ -239,7 +236,7 @@ fenn sync`}
                 </Code>
               </Box>
               <Text css={{ fontSize: "12px", color: "var(--gray-11)", lineHeight: "1.55" }}>
-                Prebuilt binaries available for macOS, Linux, and Windows via <Link href="https://github.com/sprited-ai/fenn/releases" target="_blank" css={{ fontWeight: "500" }}>GitHub Releases</Link>.
+                Manual installation available via <Link href="https://github.com/sprited-ai/fenn/releases" target="_blank" css={{ fontWeight: "500" }}>GitHub Releases</Link>.
               </Text>
             </Card>
           </Box>
