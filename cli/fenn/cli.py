@@ -200,136 +200,136 @@ def portfolio(by_account, refresh):
             else:
                 click.echo("Fetching holdings from all accounts...")
         
-        # Get all accounts
-        accounts = client.get_all_accounts()
-        
-        if not accounts:
-            click.echo("No accounts found")
-            return
-        
-        # Parse holdings data
-        aggregated = defaultdict(lambda: {
-            'symbol': '',
-            'description': '',
-            'total_quantity': Decimal('0'),
-            'total_value': Decimal('0'),
-            'accounts': [],
-            'brokers': set(),
-            'currency': 'USD'
-        })
-        
-        total_portfolio_value = Decimal('0')
-        accounts_with_errors = []
-        
-        # Fetch holdings for each account
-        for account in accounts:
-            account_id = account.get('id')
-            account_name = account.get('name', 'Unknown Account')
-            institution_name = account.get('institution_name', 'Unknown')
+            # Get all accounts
+            accounts = client.get_all_accounts()
             
-            click.echo(f"  {account_name}...", nl=False)
+            if not accounts:
+                click.echo("No accounts found")
+                return
             
-            try:
-                # Use get_user_holdings which works reliably
-                response = client.client.account_information.get_user_holdings(
-                    user_id=client.user_id,
-                    user_secret=client.user_secret,
-                    account_id=account_id
-                )
+            # Parse holdings data
+            aggregated = defaultdict(lambda: {
+                'symbol': '',
+                'description': '',
+                'total_quantity': Decimal('0'),
+                'total_value': Decimal('0'),
+                'accounts': [],
+                'brokers': set(),
+                'currency': 'USD'
+            })
+            
+            total_portfolio_value = Decimal('0')
+            accounts_with_errors = []
+            
+            # Fetch holdings for each account
+            for account in accounts:
+                account_id = account.get('id')
+                account_name = account.get('name', 'Unknown Account')
+                institution_name = account.get('institution_name', 'Unknown')
                 
-                # Extract holdings data
-                if hasattr(response, 'body'):
-                    holdings_data = response.body
-                    if hasattr(holdings_data, 'to_dict'):
-                        holdings_data = holdings_data.to_dict()
-                elif hasattr(response, 'to_dict'):
-                    holdings_data = response.to_dict().get('body', {})
-                else:
-                    holdings_data = response
+                click.echo(f"  {account_name}...", nl=False)
                 
-                # Get positions array
-                positions = holdings_data.get('positions', [])
-                positions_processed = 0
-                positions_skipped = 0
-                
-                for position in positions:
-                    try:
-                        # Handle both dict and object types
-                        if hasattr(position, 'to_dict'):
-                            pos = position.to_dict()
-                        else:
-                            pos = position
-                        
-                        # Extract symbol data
-                        symbol_data = pos.get('symbol', {})
-                        if isinstance(symbol_data, dict):
-                            symbol_info = symbol_data.get('symbol', {})
-                        else:
-                            symbol_info = symbol_data
-                        
-                        if isinstance(symbol_info, dict):
-                            symbol = symbol_info.get('symbol', 'UNKNOWN')
-                            description = symbol_info.get('description', '')
-                        else:
-                            symbol = 'UNKNOWN'
-                            description = ''
-                        
-                        # Get quantity and price with error handling - catch ALL exceptions
-                        try:
-                            quantity = Decimal(str(pos.get('units', 0)))
-                        except Exception:
-                            quantity = Decimal('0')
-                        
-                        try:
-                            price = Decimal(str(pos.get('price', 0)))
-                        except Exception:
-                            price = Decimal('0')
-                        
-                        try:
-                            avg_cost = Decimal(str(pos.get('average_purchase_price', 0)))
-                        except Exception:
-                            avg_cost = Decimal('0')
-                        
-                        # Calculate value
-                        value = quantity * price
-                        
-                        # Aggregate by symbol
-                        agg = aggregated[symbol]
-                        agg['symbol'] = symbol
-                        agg['description'] = description
-                        agg['total_quantity'] += quantity
-                        agg['total_value'] += value
-                        agg['brokers'].add(institution_name)
-                        agg['accounts'].append({
-                            'account_id': account_id,
-                            'account_name': account_name,
-                            'quantity': float(quantity),
-                            'price': float(price),
-                            'avg_cost': float(avg_cost),
-                            'value': float(value)
-                        })
-                        
-                        # Track total
-                        total_portfolio_value += value
-                        positions_processed += 1
-                        
-                    except Exception as pos_error:
-                        # Skip positions with bad data
-                        positions_skipped += 1
-                        continue
-                
-                # Report results
-                if positions_skipped > 0:
-                    click.echo(f" {positions_processed} positions ({positions_skipped} skipped)")
-                else:
-                    click.echo(f" {positions_processed} positions")
+                try:
+                    # Use get_user_holdings which works reliably
+                    response = client.client.account_information.get_user_holdings(
+                        user_id=client.user_id,
+                        user_secret=client.user_secret,
+                        account_id=account_id
+                    )
                     
-            except Exception as e:
-                click.echo(f" ERROR: {e}")
-                accounts_with_errors.append(account_name)
-                continue
+                    # Extract holdings data
+                    if hasattr(response, 'body'):
+                        holdings_data = response.body
+                        if hasattr(holdings_data, 'to_dict'):
+                            holdings_data = holdings_data.to_dict()
+                    elif hasattr(response, 'to_dict'):
+                        holdings_data = response.to_dict().get('body', {})
+                    else:
+                        holdings_data = response
+                    
+                    # Get positions array
+                    positions = holdings_data.get('positions', [])
+                    positions_processed = 0
+                    positions_skipped = 0
+                    
+                    for position in positions:
+                        try:
+                            # Handle both dict and object types
+                            if hasattr(position, 'to_dict'):
+                                pos = position.to_dict()
+                            else:
+                                pos = position
+                            
+                            # Extract symbol data
+                            symbol_data = pos.get('symbol', {})
+                            if isinstance(symbol_data, dict):
+                                symbol_info = symbol_data.get('symbol', {})
+                            else:
+                                symbol_info = symbol_data
+                            
+                            if isinstance(symbol_info, dict):
+                                symbol = symbol_info.get('symbol', 'UNKNOWN')
+                                description = symbol_info.get('description', '')
+                            else:
+                                symbol = 'UNKNOWN'
+                                description = ''
+                            
+                            # Get quantity and price with error handling - catch ALL exceptions
+                            try:
+                                quantity = Decimal(str(pos.get('units', 0)))
+                            except Exception:
+                                quantity = Decimal('0')
+                            
+                            try:
+                                price = Decimal(str(pos.get('price', 0)))
+                            except Exception:
+                                price = Decimal('0')
+                            
+                            try:
+                                avg_cost = Decimal(str(pos.get('average_purchase_price', 0)))
+                            except Exception:
+                                avg_cost = Decimal('0')
+                            
+                            # Calculate value
+                            value = quantity * price
+                            
+                            # Aggregate by symbol
+                            agg = aggregated[symbol]
+                            agg['symbol'] = symbol
+                            agg['description'] = description
+                            agg['total_quantity'] += quantity
+                            agg['total_value'] += value
+                            agg['brokers'].add(institution_name)
+                            agg['accounts'].append({
+                                'account_id': account_id,
+                                'account_name': account_name,
+                                'quantity': float(quantity),
+                                'price': float(price),
+                                'avg_cost': float(avg_cost),
+                                'value': float(value)
+                            })
+                            
+                            # Track total
+                            total_portfolio_value += value
+                            positions_processed += 1
+                            
+                        except Exception as pos_error:
+                            # Skip positions with bad data
+                            positions_skipped += 1
+                            continue
+                    
+                    # Report results
+                    if positions_skipped > 0:
+                        click.echo(f" {positions_processed} positions ({positions_skipped} skipped)")
+                    else:
+                        click.echo(f" {positions_processed} positions")
+                        
+                except Exception as e:
+                    click.echo(f" ERROR: {e}")
+                    accounts_with_errors.append(account_name)
+                    continue
             
-            # Save to cache
+            # Save to cache (after all accounts processed)
             cache_data = {
                 'cached_at': datetime.now().isoformat(),
                 'total_value': float(total_portfolio_value),
