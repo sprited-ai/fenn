@@ -496,7 +496,7 @@ fenn sync`}
           <Flex gap="3" css={{ flexWrap: "wrap" }}>
             <Link href={TERMS_URL} size="1">Terms</Link>
             <Link href={PRIVACY_URL} size="1">Privacy</Link>
-            <Link href="mailto:support@sprited.app" size="1">Support</Link>
+            <Link href="/contact.html" size="1">Contact</Link>
           </Flex>
         </Flex>
       </Container>
