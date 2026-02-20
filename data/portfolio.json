@@ -43,11 +43,11 @@
         "allows_cryptocurrency_and_regular_securities": true,
         "release_stage": "GENERALLY_AVAILABLE",
         "exchanges": [
+          "9f3ea556-15c5-4321-8983-ad4033ff802b",
+          "b4dc9dbc-7f74-424b-a322-0ec53c4557b9",
           "ff4b2ffc-5a0e-4471-9cf5-95c0c30cdedd",
           "ebd63029-461e-4bed-bd4a-d0595f880b52",
           "2b702dcb-b566-4fe9-a832-f4f4ddd6dca3",
-          "9f3ea556-15c5-4321-8983-ad4033ff802b",
-          "b4dc9dbc-7f74-424b-a322-0ec53c4557b9",
           "8f638e11-3576-4779-be5b-ab417094be33"
         ],
         "is_degraded": false
@@ -61,45 +61,364 @@
         "initial_user_identifier": "6b0007a0-3e61-4c25-b3b4-a7e2935c6960"
       },
       "is_eligible_for_payout": false
+    },
+    {
+      "id": "3cefeecf-051c-462c-be21-87013d57c79f",
+      "created_date": "2026-02-09T17:32:21.631120Z",
+      "updated_date": "2026-02-09T17:32:25.832264Z",
+      "brokerage": {
+        "authorization_types": [
+          {
+            "type": "trade",
+            "auth_type": "OAUTH"
+          },
+          {
+            "type": "read",
+            "auth_type": "OAUTH"
+          }
+        ],
+        "maintenance_windows": [],
+        "brokerage_type": {
+          "id": "ddc6b055-2960-4958-b7f4-ba425834a4be",
+          "name": "Traditional Brokerage"
+        },
+        "id": "82377296-f588-4b17-8d16-663adf33c21f",
+        "name": "E-Trade",
+        "description": "E-Trade Financial Corporation (stylized as E*TRADE) is a financial services company, which offers an electronic trading platform to trade financial assets including common stocks, preferred stocks, futures contracts, exchange-traded funds, options, mutual funds, and fixed income investments.",
+        "slug": "ETRADE",
+        "url": "https://www.us.etrade.com/",
+        "maintenance_mode": false,
+        "allows_fractional_units": false,
+        "allows_trading": true,
+        "has_reporting": true,
+        "is_real_time_connection": true,
+        "aws_s3_logo_url": "https://passiv-brokerage-logos.s3.ca-central-1.amazonaws.com/etrade-logo.png",
+        "aws_s3_square_logo_url": "https://passiv-brokerage-logos.s3.ca-central-1.amazonaws.com/etrade-logo-square.jpg",
+        "open_url": "https://us.etrade.com/home",
+        "display_name": "E*Trade",
+        "enabled": true,
+        "allows_cryptocurrency_symbols": false,
+        "allows_cryptocurrency_and_regular_securities": false,
+        "release_stage": "GENERALLY_AVAILABLE",
+        "exchanges": [
+          "9f3ea556-15c5-4321-8983-ad4033ff802b",
+          "b4dc9dbc-7f74-424b-a322-0ec53c4557b9",
+          "ff4b2ffc-5a0e-4471-9cf5-95c0c30cdedd",
+          "ebd63029-461e-4bed-bd4a-d0595f880b52",
+          "2b702dcb-b566-4fe9-a832-f4f4ddd6dca3",
+          "8f638e11-3576-4779-be5b-ab417094be33"
+        ],
+        "is_degraded": false
+      },
+      "name": "Connection-2",
+      "type": "read",
+      "disabled": false,
+      "disabled_date": null,
+      "meta": {
+        "identifier": "153257989"
+      },
+      "is_eligible_for_payout": false
+    },
+    {
+      "id": "03468606-e42b-4fc9-add6-9086c667800f",
+      "created_date": "2026-02-20T18:18:00.923539Z",
+      "updated_date": "2026-02-20T18:18:07.238318Z",
+      "brokerage": {
+        "authorization_types": [
+          {
+            "type": "read",
+            "auth_type": "OAUTH"
+          }
+        ],
+        "maintenance_windows": [],
+        "brokerage_type": {
+          "id": "ddc6b055-2960-4958-b7f4-ba425834a4be",
+          "name": "Traditional Brokerage"
+        },
+        "id": "b2ab13d8-da9f-48c0-8fb1-48331ba5deeb",
+        "name": "Fidelity",
+        "description": "Fidelity is an American multinational financial services corporation based in Boston, Massachusetts.",
+        "slug": "FIDELITY",
+        "url": "https://www.fidelity.com/",
+        "maintenance_mode": false,
+        "allows_fractional_units": true,
+        "allows_trading": false,
+        "has_reporting": true,
+        "is_real_time_connection": true,
+        "aws_s3_logo_url": "https://passiv-brokerage-logos.s3.ca-central-1.amazonaws.com/fidelity-logo.png",
+        "aws_s3_square_logo_url": "https://passiv-brokerage-logos.s3.ca-central-1.amazonaws.com/fidelity-logo-square.png",
+        "open_url": "https://fidelity.com",
+        "display_name": "Fidelity",
+        "enabled": true,
+        "allows_cryptocurrency_symbols": false,
+        "allows_cryptocurrency_and_regular_securities": false,
+        "release_stage": "GENERALLY_AVAILABLE",
+        "exchanges": [
+          "9f3ea556-15c5-4321-8983-ad4033ff802b",
+          "b4dc9dbc-7f74-424b-a322-0ec53c4557b9",
+          "ff4b2ffc-5a0e-4471-9cf5-95c0c30cdedd",
+          "ebd63029-461e-4bed-bd4a-d0595f880b52",
+          "2b702dcb-b566-4fe9-a832-f4f4ddd6dca3",
+          "8f638e11-3576-4779-be5b-ab417094be33"
+        ],
+        "is_degraded": false
+      },
+      "name": "Connection-3",
+      "type": "read",
+      "disabled": false,
+      "disabled_date": null,
+      "meta": {
+        "identifier": "CiJkZDY5OThhNTRjMGFkMDFlYmMyMDAwODMzMzAwMDBhYTMzEghmaWRlbGl0eQ"
+      },
+      "is_eligible_for_payout": false
     }
   ],
   "accounts": [
     {
       "info": {
-        "id": "a22a1d1c-f2ff-429b-85f6-037e2fa25358",
-        "brokerage_authorization": "01ac54af-d49d-4f9a-996f-56cdab5070fd",
-        "portfolio_group": "e15f31d5-61a4-48a2-8ce1-75d1cb74febc",
-        "name": "Robinhood Joint",
-        "number": "116725146611",
-        "institution_name": "Robinhood",
+        "id": "a2568244-1d53-4982-85f3-012f42566036",
+        "brokerage_authorization": "03468606-e42b-4fc9-add6-9086c667800f",
+        "portfolio_group": "f757721d-8c0e-4be0-9ca4-2f7513459056",
+        "name": "Sim City 2000",
+        "number": "*****5929",
+        "institution_name": "Fidelity",
         "meta": {
-          "type": "JOINT",
-          "institution_name": "Robinhood",
-          "brokerage_account_type": "JOINT"
+          "account_id": "947685778",
+          "institution_name": "Fidelity"
         },
         "cash_restrictions": [],
-        "created_date": "2026-02-09T17:22:24.799767Z",
+        "created_date": "2026-02-20T18:18:05.628266Z",
         "funding_date": null,
         "opening_date": null,
         "sync_status": {
           "holdings": {
-            "last_successful_sync": "2026-02-09T17:22:27.810579+00:00",
+            "last_successful_sync": "2026-02-20T18:18:42.593122+00:00",
             "initial_sync_completed": true
           },
           "transactions": {
-            "last_successful_sync": "2026-02-08",
+            "last_successful_sync": null,
             "first_transaction_date": null,
+            "initial_sync_completed": false
+          }
+        },
+        "balance": {
+          "total": {
+            "amount": 1688685.77,
+            "currency": "USD"
+          }
+        },
+        "raw_data": null,
+        "raw_type": "TODI",
+        "status": "open",
+        "is_paper": false
+      },
+      "balances": {},
+      "positions": []
+    },
+    {
+      "info": {
+        "id": "5de50183-b89e-4c72-a794-e43f1bc8b76d",
+        "brokerage_authorization": "03468606-e42b-4fc9-add6-9086c667800f",
+        "portfolio_group": "c9df1b9c-911b-4a7c-81ab-378ac3c6f911",
+        "name": "Asia Bet",
+        "number": "*****7242",
+        "institution_name": "Fidelity",
+        "meta": {
+          "account_id": "167163940",
+          "institution_name": "Fidelity"
+        },
+        "cash_restrictions": [],
+        "created_date": "2026-02-20T18:18:05.455371Z",
+        "funding_date": null,
+        "opening_date": null,
+        "sync_status": {
+          "holdings": {
+            "last_successful_sync": "2026-02-20T18:18:51.210782+00:00",
+            "initial_sync_completed": true
+          },
+          "transactions": {
+            "last_successful_sync": null,
+            "first_transaction_date": null,
+            "initial_sync_completed": false
+          }
+        },
+        "balance": {
+          "total": {
+            "amount": 117371.12,
+            "currency": "USD"
+          }
+        },
+        "raw_data": null,
+        "raw_type": "TODI",
+        "status": "open",
+        "is_paper": false
+      },
+      "balances": {},
+      "positions": []
+    },
+    {
+      "info": {
+        "id": "362550ec-923d-4a29-98d1-2f6ad15c5137",
+        "brokerage_authorization": "03468606-e42b-4fc9-add6-9086c667800f",
+        "portfolio_group": "f8e57f98-58f4-49a3-b9b3-e9b3a159c109",
+        "name": "Permanence 200",
+        "number": "*****0934",
+        "institution_name": "Fidelity",
+        "meta": {
+          "account_id": "989373579",
+          "institution_name": "Fidelity"
+        },
+        "cash_restrictions": [],
+        "created_date": "2026-02-20T18:18:05.793321Z",
+        "funding_date": null,
+        "opening_date": null,
+        "sync_status": {
+          "holdings": {
+            "last_successful_sync": "2026-02-20T18:18:10.058751+00:00",
+            "initial_sync_completed": true
+          },
+          "transactions": {
+            "last_successful_sync": "2026-02-19",
+            "first_transaction_date": "2025-09-08",
             "initial_sync_completed": true
           }
         },
         "balance": {
           "total": {
-            "amount": 0.0,
+            "amount": 289.96,
             "currency": "USD"
           }
         },
         "raw_data": null,
-        "raw_type": "JOINT",
+        "raw_type": "TODI",
+        "status": "open",
+        "is_paper": false
+      },
+      "balances": {},
+      "positions": []
+    },
+    {
+      "info": {
+        "id": "2014d4d6-4cfe-4bde-a8a2-725c1487830f",
+        "brokerage_authorization": "03468606-e42b-4fc9-add6-9086c667800f",
+        "portfolio_group": "74711357-3b3d-4803-bd1d-15bbca841cec",
+        "name": "APPLE 401(K) PLAN",
+        "number": "*****8272",
+        "institution_name": "Fidelity",
+        "meta": {
+          "account_id": "1080998272",
+          "institution_name": "Fidelity"
+        },
+        "cash_restrictions": [],
+        "created_date": "2026-02-20T18:18:05.874697Z",
+        "funding_date": null,
+        "opening_date": null,
+        "sync_status": {
+          "holdings": {
+            "last_successful_sync": "2026-02-20T18:18:10.717331+00:00",
+            "initial_sync_completed": true
+          },
+          "transactions": {
+            "last_successful_sync": "2026-02-19",
+            "first_transaction_date": "2024-03-01",
+            "initial_sync_completed": true
+          }
+        },
+        "balance": {
+          "total": {
+            "amount": 513191.4,
+            "currency": "USD"
+          }
+        },
+        "raw_data": null,
+        "raw_type": "401K",
+        "status": "open",
+        "is_paper": false
+      },
+      "balances": {},
+      "positions": []
+    },
+    {
+      "info": {
+        "id": "98cff052-3096-4f9b-b6d6-16c4fc744943",
+        "brokerage_authorization": "03468606-e42b-4fc9-add6-9086c667800f",
+        "portfolio_group": "a578f750-e54f-4095-b3b8-b08e1122a434",
+        "name": "Jane College Fund",
+        "number": "*****1447",
+        "institution_name": "Fidelity",
+        "meta": {
+          "account_id": "85597390",
+          "institution_name": "Fidelity"
+        },
+        "cash_restrictions": [],
+        "created_date": "2026-02-20T18:18:05.371164Z",
+        "funding_date": null,
+        "opening_date": null,
+        "sync_status": {
+          "holdings": {
+            "last_successful_sync": "2026-02-20T18:18:11.029169+00:00",
+            "initial_sync_completed": true
+          },
+          "transactions": {
+            "last_successful_sync": "2026-02-19",
+            "first_transaction_date": "2025-08-26",
+            "initial_sync_completed": true
+          }
+        },
+        "balance": {
+          "total": {
+            "amount": 7675.63,
+            "currency": "USD"
+          }
+        },
+        "raw_data": null,
+        "raw_type": "College Savings",
+        "status": "open",
+        "is_paper": false
+      },
+      "balances": {},
+      "positions": []
+    },
+    {
+      "info": {
+        "id": "f03c5a2c-5967-40c6-8deb-3f3f630bb8ec",
+        "brokerage_authorization": "3cefeecf-051c-462c-be21-87013d57c79f",
+        "portfolio_group": "b0260cde-a3ff-4ad5-8f59-a9ccb72dfeae",
+        "name": "E*Trade Individual Brokerage",
+        "number": "cZDiIQQ9BRZA9wjsrXUBzQ",
+        "institution_name": "E-Trade",
+        "meta": {
+          "type": "INDIVIDUAL",
+          "accountId": "153257989",
+          "accountIdKey": "cZDiIQQ9BRZA9wjsrXUBzQ",
+          "accountStatus": "ACTIVE",
+          "institutionType": "BROKERAGE",
+          "institution_name": "E-Trade",
+          "shareWorksAccount": false
+        },
+        "cash_restrictions": [],
+        "created_date": "2026-02-09T17:32:25.292678Z",
+        "funding_date": null,
+        "opening_date": null,
+        "sync_status": {
+          "holdings": {
+            "last_successful_sync": "2026-02-19T21:57:52.132962+00:00",
+            "initial_sync_completed": true
+          },
+          "transactions": {
+            "last_successful_sync": "2026-02-18",
+            "first_transaction_date": "2024-02-14",
+            "initial_sync_completed": true
+          }
+        },
+        "balance": {
+          "total": {
+            "amount": 735651.61983,
+            "currency": "USD"
+          }
+        },
+        "raw_data": null,
+        "raw_type": "INDIVIDUAL",
         "status": null,
         "is_paper": false
       },
@@ -108,40 +427,44 @@
     },
     {
       "info": {
-        "id": "3a58ab51-5b46-4272-96fc-5d532105d66a",
-        "brokerage_authorization": "01ac54af-d49d-4f9a-996f-56cdab5070fd",
-        "portfolio_group": "56bae8b0-6068-4189-8055-c9c6bdae480c",
-        "name": "Robinhood Roth Ira",
-        "number": "664709953",
-        "institution_name": "Robinhood",
+        "id": "ed50cae8-0cdd-445f-8fbd-668729377982",
+        "brokerage_authorization": "3cefeecf-051c-462c-be21-87013d57c79f",
+        "portfolio_group": "8944b1fc-58a8-4ce1-b1cc-094b3a85990b",
+        "name": "E*Trade Traditional IRA",
+        "number": "zpP0riemG-cWmCRaWPc-kQ",
+        "institution_name": "E-Trade",
         "meta": {
-          "type": "ROTH_IRA",
-          "institution_name": "Robinhood",
-          "brokerage_account_type": "ROTH_IRA"
+          "type": "CONTRIBUTORY",
+          "accountId": "775896714",
+          "accountIdKey": "zpP0riemG-cWmCRaWPc-kQ",
+          "accountStatus": "ACTIVE",
+          "institutionType": "BROKERAGE",
+          "institution_name": "E-Trade",
+          "shareWorksAccount": false
         },
         "cash_restrictions": [],
-        "created_date": "2026-02-09T17:22:24.775414Z",
+        "created_date": "2026-02-09T17:32:25.284635Z",
         "funding_date": null,
         "opening_date": null,
         "sync_status": {
           "holdings": {
-            "last_successful_sync": "2026-02-09T17:22:30.764148+00:00",
+            "last_successful_sync": "2026-02-19T21:57:32.983172+00:00",
             "initial_sync_completed": true
           },
           "transactions": {
-            "last_successful_sync": "2026-02-08",
-            "first_transaction_date": "2023-02-02",
+            "last_successful_sync": "2026-02-18",
+            "first_transaction_date": "2024-02-29",
             "initial_sync_completed": true
           }
         },
         "balance": {
           "total": {
-            "amount": 0.03,
+            "amount": 5200.89275,
             "currency": "USD"
           }
         },
         "raw_data": null,
-        "raw_type": "ROTH_IRA",
+        "raw_type": "CONTRIBUTORY",
         "status": null,
         "is_paper": false
       },
@@ -167,23 +490,107 @@
         "opening_date": null,
         "sync_status": {
           "holdings": {
-            "last_successful_sync": "2026-02-09T17:22:40.957594+00:00",
+            "last_successful_sync": "2026-02-19T22:16:53.741219+00:00",
             "initial_sync_completed": true
           },
           "transactions": {
-            "last_successful_sync": "2026-02-08",
+            "last_successful_sync": "2026-02-18",
             "first_transaction_date": "2019-12-08",
             "initial_sync_completed": true
           }
         },
         "balance": {
           "total": {
-            "amount": 1133.05492377,
+            "amount": 1126.51194294,
             "currency": "USD"
           }
         },
         "raw_data": null,
         "raw_type": "MANAGED_INDIVIDUAL",
+        "status": null,
+        "is_paper": false
+      },
+      "balances": {},
+      "positions": []
+    },
+    {
+      "info": {
+        "id": "3a58ab51-5b46-4272-96fc-5d532105d66a",
+        "brokerage_authorization": "01ac54af-d49d-4f9a-996f-56cdab5070fd",
+        "portfolio_group": "56bae8b0-6068-4189-8055-c9c6bdae480c",
+        "name": "Robinhood Roth Ira",
+        "number": "664709953",
+        "institution_name": "Robinhood",
+        "meta": {
+          "type": "ROTH_IRA",
+          "institution_name": "Robinhood",
+          "brokerage_account_type": "ROTH_IRA"
+        },
+        "cash_restrictions": [],
+        "created_date": "2026-02-09T17:22:24.775414Z",
+        "funding_date": null,
+        "opening_date": null,
+        "sync_status": {
+          "holdings": {
+            "last_successful_sync": "2026-02-19T22:16:53.684288+00:00",
+            "initial_sync_completed": true
+          },
+          "transactions": {
+            "last_successful_sync": "2026-02-18",
+            "first_transaction_date": "2023-02-02",
+            "initial_sync_completed": true
+          }
+        },
+        "balance": {
+          "total": {
+            "amount": 0.03,
+            "currency": "USD"
+          }
+        },
+        "raw_data": null,
+        "raw_type": "ROTH_IRA",
+        "status": null,
+        "is_paper": false
+      },
+      "balances": {},
+      "positions": []
+    },
+    {
+      "info": {
+        "id": "a22a1d1c-f2ff-429b-85f6-037e2fa25358",
+        "brokerage_authorization": "01ac54af-d49d-4f9a-996f-56cdab5070fd",
+        "portfolio_group": "e15f31d5-61a4-48a2-8ce1-75d1cb74febc",
+        "name": "Robinhood Joint",
+        "number": "116725146611",
+        "institution_name": "Robinhood",
+        "meta": {
+          "type": "JOINT",
+          "institution_name": "Robinhood",
+          "brokerage_account_type": "JOINT"
+        },
+        "cash_restrictions": [],
+        "created_date": "2026-02-09T17:22:24.799767Z",
+        "funding_date": null,
+        "opening_date": null,
+        "sync_status": {
+          "holdings": {
+            "last_successful_sync": "2026-02-19T22:16:53.537533+00:00",
+            "initial_sync_completed": true
+          },
+          "transactions": {
+            "last_successful_sync": "2026-02-18",
+            "first_transaction_date": null,
+            "initial_sync_completed": true
+          }
+        },
+        "balance": {
+          "total": {
+            "amount": 0.0,
+            "currency": "USD"
+          }
+        },
+        "raw_data": null,
+        "raw_type": "JOINT",
         "status": null,
         "is_paper": false
       },
@@ -209,18 +616,18 @@
         "opening_date": null,
         "sync_status": {
           "holdings": {
-            "last_successful_sync": "2026-02-09T17:22:57.709162+00:00",
+            "last_successful_sync": "2026-02-19T22:17:06.135265+00:00",
             "initial_sync_completed": true
           },
           "transactions": {
-            "last_successful_sync": null,
-            "first_transaction_date": null,
-            "initial_sync_completed": false
+            "last_successful_sync": "2026-02-18",
+            "first_transaction_date": "2015-12-23",
+            "initial_sync_completed": true
           }
         },
         "balance": {
           "total": {
-            "amount": 230854.51803787,
+            "amount": 226491.62179532,
             "currency": "USD"
           }
         },
@@ -233,5 +640,5 @@
       "positions": []
     }
   ],
-  "synced_at": "2026-02-09T17:30:31.573715"
+  "synced_at": "2026-02-20T18:22:03.560155"
 }
