@@ -84,9 +84,23 @@ fenn sync
 # View current portfolio status
 fenn status
 
+# View aggregated portfolio (cached for the day)
+fenn portfolio
+
+# View portfolio grouped by account
+fenn portfolio --by-account
+
+# Force refresh holdings data
+fenn portfolio --refresh
+
 # Export data to a file
 fenn export -o my_portfolio.json
 ```
+
+**Note**: The `portfolio` command caches holdings data for the current day. It will automatically fetch fresh data if:
+- This is the first run of the day
+- You use the `--refresh` flag
+- The cache file doesn't exist
 
 ## Architecture
 
