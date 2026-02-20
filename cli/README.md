@@ -24,6 +24,7 @@ Fenn maintains an accurate local snapshot of your brokerage portfolio data from 
 - 💾 Maintain local JSON archive with historical snapshots
 - 🔍 Cross-broker portfolio view with aggregated holdings
 - 📈 Real-time position values and portfolio allocations
+- 📉 Interactive visualizations (allocation, top holdings, distribution, concentration)
 - 🏦 See which brokers hold each symbol
 - ⚡ Smart caching - fetches data once per day, instant on subsequent runs
 - 🔒 Secure credential management via environment variables
@@ -94,6 +95,15 @@ fenn portfolio --by-account
 
 # Force refresh holdings data
 fenn portfolio --refresh
+
+# Generate portfolio visualizations
+fenn plot allocation              # Donut chart of top holdings
+fenn plot top-holdings --top 20   # Bar chart of top 20 positions
+fenn plot by-broker               # Treemap of broker distribution
+fenn plot concentration           # Cumulative allocation curve
+
+# Save chart to file
+fenn plot allocation -o my-allocation.html --no-browser
 
 # Export data to a file
 fenn export -o my_portfolio.json
