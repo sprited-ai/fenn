@@ -172,7 +172,7 @@ def portfolio(by_account, refresh):
         Config.ensure_data_dir()
         
         # Check cache
-        holdings_cache_path = Config.data_dir / 'holdings_cache.json'
+        holdings_cache_path = Config.DATA_DIR / 'holdings_cache.json'
         use_cache = False
         cached_data = None
         
@@ -189,7 +189,8 @@ def portfolio(by_account, refresh):
         
         if use_cache:
             aggregated = {k: {**v, 'total_quantity': Decimal(str(v['total_quantity'])), 
-                              'total_value': Decimal(str(v['total_value']))}
+                              'total_value': Decimal(str(v['total_value'])),
+                              'brokers': set(v.get('brokers', []))}
                           for k, v in cached_data['holdings'].items()}
             total_portfolio_value = Decimal(str(cached_data['total_value']))
             accounts_with_errors = cached_data.get('errors', [])
@@ -213,6 +214,7 @@ def portfolio(by_account, refresh):
             'total_quantity': Decimal('0'),
             'total_value': Decimal('0'),
             'accounts': [],
+            'brokers': set(),
             'currency': 'USD'
         })
         
@@ -223,6 +225,7 @@ def portfolio(by_account, refresh):
         for account in accounts:
             account_id = account.get('id')
             account_name = account.get('name', 'Unknown Account')
+            institution_name = account.get('institution_name', 'Unknown')
             
             click.echo(f"  {account_name}...", nl=False)
             
@@ -296,6 +299,7 @@ def portfolio(by_account, refresh):
                         agg['description'] = description
                         agg['total_quantity'] += quantity
                         agg['total_value'] += value
+                        agg['brokers'].add(institution_name)
                         agg['accounts'].append({
                             'account_id': account_id,
                             'account_name': account_name,
@@ -330,7 +334,8 @@ def portfolio(by_account, refresh):
                 'cached_at': datetime.now().isoformat(),
                 'total_value': float(total_portfolio_value),
                 'holdings': {k: {**v, 'total_quantity': float(v['total_quantity']),
-                                  'total_value': float(v['total_value'])}
+                                  'total_value': float(v['total_value']),
+                                  'brokers': list(v['brokers'])}
                             for k, v in aggregated.items()},
                 'errors': accounts_with_errors
             }
@@ -371,9 +376,9 @@ def portfolio(by_account, refresh):
                 click.echo(f"{'Account Total:':<49} ${float(account_data['total']):>14,.2f}")
         else:
             # Display aggregated view
-            click.echo("=" * 100)
-            click.echo(f"{'Symbol':<8} {'Description':<40} {'Quantity':>15} {'Value':>15} {'Allocation':>10}")
-            click.echo("=" * 100)
+            click.echo("=" * 135)
+            click.echo(f"{'Symbol':<8} {'Broker':<12} {'Description':<35} {'Quantity':>15} {'Value':>15} {'Allocation':>10}")
+            click.echo("=" * 135)
             
             # Sort by value descending
             sorted_holdings = sorted(aggregated.items(), key=lambda x: x[1]['total_value'], reverse=True)
@@ -383,13 +388,14 @@ def portfolio(by_account, refresh):
                 value = data['total_value']
                 allocation = (value / total_portfolio_value * 100) if total_portfolio_value > 0 else Decimal('0')
                 
-                desc = data['description'][:40] if len(data['description']) > 40 else data['description']
+                desc = data['description'][:35] if len(data['description']) > 35 else data['description']
+                brokers = ', '.join(sorted(data['brokers']))[:12] if data['brokers'] else ''
                 
-                click.echo(f"{symbol:<8} {desc:<40} {float(quantity):>15.6f} ${float(value):>14,.2f} {float(allocation):>9.2f}%")
+                click.echo(f"{symbol:<8} {brokers:<12} {desc:<35} {float(quantity):>15.6f} ${float(value):>14,.2f} {float(allocation):>9.2f}%")
             
-            click.echo("=" * 100)
-            click.echo(f"{'TOTAL':<8} {'':40} {'':>15} ${float(total_portfolio_value):>14,.2f} {'100.00%':>10}")
-            click.echo("=" * 100)
+            click.echo("=" * 135)
+            click.echo(f"{'TOTAL':<8} {'':12} {'':35} {'':>15} ${float(total_portfolio_value):>14,.2f} {'100.00%':>10}")
+            click.echo("=" * 135)
         
         # Summary
         click.echo()

@@ -22,9 +22,11 @@ Fenn maintains an accurate local snapshot of your brokerage portfolio data from 
 
 - 📊 Download portfolio data from multiple brokers
 - 💾 Maintain local JSON archive with historical snapshots
-- 🔍 Cross-broker portfolio view
+- 🔍 Cross-broker portfolio view with aggregated holdings
+- 📈 Real-time position values and portfolio allocations
+- 🏦 See which brokers hold each symbol
+- ⚡ Smart caching - fetches data once per day, instant on subsequent runs
 - 🔒 Secure credential management via environment variables
-- 📈 Risk and allocation analysis ready
 
 ## Installation
 
@@ -102,6 +104,27 @@ fenn export -o my_portfolio.json
 - You use the `--refresh` flag
 - The cache file doesn't exist
 
+Example output:
+```
+$ fenn portfolio
+Using cached holdings from today...
+
+========================================================================
+Symbol   Broker       Description                      Quantity    Value Allocation
+========================================================================
+FNILX    Fidelity     Fidelity Concord Street Trust  20782.301000 $507,503.79  18.17%
+QQQ      E-Trade, Fid Invesco Capital Management       447.773109 $271,089.42   9.70%
+SPY      E-Trade, Fid SPDR S&P 500 ETF Trust           267.369170 $184,028.86   6.58%
+...
+========================================================================
+TOTAL                                                              $2,791,967.31 100.00%
+========================================================================
+
+Portfolio Summary:
+  Total Holdings: 333 unique symbols
+  Total Value: $2,791,967.31
+```
+
 ## Architecture
 
 ```
@@ -118,8 +141,11 @@ Inspection & Reporting Tools
 
 ## Data Storage
 
-Portfolio data is stored locally in `data/portfolio.json` with the following structure:
+Portfolio data is stored locally in:
+- `data/portfolio.json` - Account metadata and connection info (synced via `fenn sync`)
+- `data/holdings_cache.json` - Daily cached holdings data (refreshed daily or with `--refresh`)
 
+Portfolio structure:
 ```json
 {
   "user": { "user_id": "...", "user_secret": "..." },
@@ -128,14 +154,14 @@ Portfolio data is stored locally in `data/portfolio.json` with the following str
     {
       "info": { "name": "...", "id": "..." },
       "balances": { "total": { "amount": 0, "currency": "USD" } },
-      "positions": [
-        { "symbol": "...", "quantity": 0, "..." }
-      ]
+      "positions": []
     }
   ],
   "synced_at": "2026-02-09T..."
 }
 ```
+
+**Note**: The `positions` array in `portfolio.json` may be empty. Use the `fenn portfolio` command which fetches live holdings data via a more reliable API endpoint.
 
 ## Security
 
