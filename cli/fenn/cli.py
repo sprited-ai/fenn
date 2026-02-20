@@ -414,5 +414,88 @@ def portfolio(by_account, refresh):
         raise click.Abort()
 
 
+@cli.command()
+@click.argument('chart_type', type=click.Choice(['allocation', 'top-holdings', 'by-broker', 'concentration'], case_sensitive=False))
+@click.option('--top', '-t', default=10, help='Number of top holdings to show (for allocation/top-holdings)')
+@click.option('--output', '-o', help='Output file path (default: temp file)')
+@click.option('--no-browser', is_flag=True, help="Don't auto-open in browser")
+def plot(chart_type, top, output, no_browser):
+    """Generate portfolio visualization charts
+    
+    Chart types:
+      allocation      - Donut chart of top holdings
+      top-holdings    - Bar chart of largest positions
+      by-broker       - Treemap of broker distribution
+      concentration   - Cumulative allocation curve
+    """
+    try:
+        from decimal import Decimal
+        from datetime import date
+        from .plotting import (
+            create_allocation_chart,
+            create_top_holdings_chart,
+            create_broker_distribution_chart,
+            create_concentration_chart,
+            save_and_open_chart
+        )
+        
+        client = SnapTradeClient()
+        Config.ensure_data_dir()
+        
+        # Load data from cache
+        holdings_cache_path = Config.DATA_DIR / 'holdings_cache.json'
+        
+        if not holdings_cache_path.exists():
+            click.echo("No portfolio data found. Run 'fenn portfolio' first to fetch data.")
+            raise click.Abort()
+        
+        try:
+            with open(holdings_cache_path, 'r') as f:
+                cached_data = json.load(f)
+        except (json.JSONDecodeError, FileNotFoundError) as e:
+            click.echo(f"Error reading cache: {e}")
+            click.echo("Run 'fenn portfolio --refresh' to fetch fresh data.")
+            raise click.Abort()
+        
+        # Convert cached data back to proper types
+        aggregated = {k: {**v, 'total_quantity': Decimal(str(v['total_quantity'])), 
+                          'total_value': Decimal(str(v['total_value'])),
+                          'brokers': set(v.get('brokers', []))}
+                      for k, v in cached_data['holdings'].items()}
+        total_portfolio_value = Decimal(str(cached_data['total_value']))
+        
+        if not aggregated:
+            click.echo("No holdings data found.")
+            raise click.Abort()
+        
+        click.echo(f"Generating {chart_type} chart...")
+        
+        # Create the appropriate chart
+        if chart_type == 'allocation':
+            fig = create_allocation_chart(aggregated, total_portfolio_value, top_n=top)
+        elif chart_type == 'top-holdings':
+            fig = create_top_holdings_chart(aggregated, limit=top)
+        elif chart_type == 'by-broker':
+            fig = create_broker_distribution_chart(aggregated)
+        elif chart_type == 'concentration':
+            fig = create_concentration_chart(aggregated, total_portfolio_value)
+        else:
+            click.echo(f"Unknown chart type: {chart_type}")
+            raise click.Abort()
+        
+        # Save and optionally open
+        output_path = save_and_open_chart(fig, output_path=output, auto_open=not no_browser)
+        
+        click.echo(f"✓ Chart saved to: {output_path}")
+        if not no_browser:
+            click.echo("✓ Opening in browser...")
+        
+    except Exception as e:
+        click.echo(f"❌ Error: {e}", err=True)
+        import traceback
+        traceback.print_exc()
+        raise click.Abort()
+
+
 if __name__ == "__main__":
     main()
