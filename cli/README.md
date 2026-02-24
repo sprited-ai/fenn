@@ -135,6 +135,44 @@ Portfolio Summary:
   Total Value: $2,791,967.31
 ```
 
+### Adding Manual Holdings
+
+Some positions may not be available through SnapTrade (e.g., ESPP shares, RSU accounts, private holdings). You can add these manually by editing `data/manual_holdings.json`:
+
+```json
+{
+  "comment": "Manual portfolio holdings not tracked by SnapTrade",
+  "holdings": [
+    {
+      "symbol": "AAPL",
+      "description": "Apple Inc. - ESPP",
+      "quantity": 125.5,
+      "price": 263.39,
+      "value": 33055.45,
+      "account_name": "E*Trade Stock Plan",
+      "institution_name": "E-Trade",
+      "account_type": "ESPP",
+      "notes": "Employee Stock Purchase Plan shares"
+    }
+  ]
+}
+```
+
+**Field descriptions:**
+- `symbol`: Stock ticker (required)
+- `description`: Full position name (optional)
+- `quantity`: Number of shares (required)
+- `price`: Current price per share (optional, used to calculate value)
+- `value`: Total position value (optional, calculated as quantity × price if not provided)
+- `account_name`: Display name for the account (required)
+- `institution_name`: Broker or institution name (required)
+- `account_type`: Account type (e.g., ESPP, RSU, IRA) (optional)
+- `notes`: Additional notes (optional)
+
+Manual holdings are automatically merged with SnapTrade data when you run `fenn portfolio`. They will appear in all portfolio views and visualizations.
+
+**Important**: Manual holdings are not cached. Update the JSON file whenever your positions change, and the changes will be reflected immediately on the next `fenn portfolio` run.
+
 ## Architecture
 
 ```
@@ -154,6 +192,7 @@ Inspection & Reporting Tools
 Portfolio data is stored locally in:
 - `data/portfolio.json` - Account metadata and connection info (synced via `fenn sync`)
 - `data/holdings_cache.json` - Daily cached holdings data (refreshed daily or with `--refresh`)
+- `data/manual_holdings.json` - Manual position entries not tracked by SnapTrade (optional, user-edited)
 
 Portfolio structure:
 ```json
