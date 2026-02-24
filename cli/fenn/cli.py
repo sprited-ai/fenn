@@ -596,6 +596,49 @@ def plot(chart_type, top, output, no_browser):
                 aggregated['BRK.B'] = aggregated.pop('BRKB')
                 aggregated['BRK.B']['symbol'] = 'BRK.B'
 
+        # Merge S&P 500 and similar funds
+        # FNILX is Fidelity ZERO Large Cap Index (tracks similar to S&P 500)
+        sp500_tickers = ['VOO', 'SPY', 'IVV', 'FXAIX', 'O8I1', 'VFIAX', 'FNILX'] 
+        found_sp500 = [t for t in sp500_tickers if t in aggregated]
+        
+        if len(found_sp500) > 0:
+            click.echo(f"Merging S&P 500 funds: {', '.join(found_sp500)}...")
+            
+            total_qty = Decimal('0')
+            total_val = Decimal('0')
+            brokers = set()
+            accounts = []
+            breakdown_parts = []
+            
+            # Sort tickers by value for better display
+            sorted_tickers = sorted(found_sp500, key=lambda t: aggregated[t]['total_value'], reverse=True)
+            
+            for ticker in sorted_tickers:
+                data = aggregated[ticker]
+                val = data['total_value']
+                
+                total_qty += data['total_quantity']
+                total_val += val
+                brokers.update(data['brokers'])
+                accounts.extend(data.get('accounts', []))
+                
+                breakdown_parts.append(f"{ticker}: ${float(val):,.0f}")
+                del aggregated[ticker]
+            
+            # List components in description
+            components_str = ', '.join(sorted_tickers)
+            
+            aggregated['S&P-track'] = {
+                'symbol': 'S&P-track',
+                'description': f'S&P 500 Trackers ({components_str})',
+                'total_quantity': total_qty,
+                'total_value': total_val,
+                'brokers': brokers,
+                'accounts': accounts,
+                'currency': 'USD',
+                'breakdown': "<br>".join(breakdown_parts)
+            }
+
         click.echo(f"Generating {chart_type} chart...")
         
         # Create the appropriate chart

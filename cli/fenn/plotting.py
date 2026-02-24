@@ -30,6 +30,7 @@ def create_allocation_chart(holdings: Dict[str, Any], total_value: Decimal, top_
     labels = []
     values = []
     colors = []
+    hover_texts = []
     
     # Color palette
     symbol_colors = px.colors.qualitative.Set3
@@ -38,11 +39,22 @@ def create_allocation_chart(holdings: Dict[str, Any], total_value: Decimal, top_
         labels.append(symbol)
         values.append(float(data['total_value']))
         colors.append(symbol_colors[i % len(symbol_colors)])
+        
+        # Build hover text
+        # Access 'breakdown' safely using .get() since 'data' is a dict
+        breakdown = data.get('breakdown', '')
+        
+        hover = f"<b>{symbol}</b><br>Value: ${float(data['total_value']):,.2f}<br>Allocation: %{{percent}}"
+        if breakdown:
+            hover += f"<br><br>Includes:<br>{breakdown}"
+        hover += "<extra></extra>"
+        hover_texts.append(hover)
     
     if other_value > 0:
         labels.append("Other Holdings")
         values.append(other_value)
         colors.append('#cccccc')
+        hover_texts.append(f"<b>Other Holdings</b><br>Value: ${other_value:,.2f}<br>Allocation: %{{percent}}<extra></extra>")
     
     # Create donut chart
     fig = go.Figure(data=[go.Pie(
@@ -52,15 +64,43 @@ def create_allocation_chart(holdings: Dict[str, Any], total_value: Decimal, top_
         marker=dict(colors=colors),
         textinfo='label+percent',
         textposition='auto',
-        hovertemplate='<b>%{label}</b><br>Value: $%{value:,.2f}<br>Allocation: %{percent}<extra></extra>'
+        hovertemplate=hover_texts
     )])
+    
+    # Define title updater
+    total_str = f"${float(total_value):,.2f}"
     
     fig.update_layout(
         title=dict(
-            text=f'Portfolio Allocation - Top {top_n} Holdings + Other<br><sub>Total: ${float(total_value):,.2f}</sub>',
+            text=f'Portfolio Allocation - Top {top_n} Holdings + Other<br><sub>Total: <span style="font-style:italic">Hidden</span></sub>',
             x=0.5,
             xanchor='center'
         ),
+        updatemenus=[
+            dict(
+                type="buttons",
+                direction="left",
+                x=1.0,  # Align to right
+                y=1.1,  # Place above the chart
+                xanchor='right',
+                yanchor='top',
+                buttons=[
+                    dict(
+                        label="Show Balance",
+                        method="relayout",
+                        args=[{"title.text": f'Portfolio Allocation - Top {top_n} Holdings + Other<br><sub>Total: {total_str}</sub>'}]
+                    ),
+                    dict(
+                        label="Hide Balance",
+                        method="relayout",
+                        args=[{"title.text": f'Portfolio Allocation - Top {top_n} Holdings + Other<br><sub>Total: <span style="font-style:italic">Hidden</span></sub>'}]
+                    )
+                ],
+                pad={"r": 10, "t": 10},
+                showactive=True,
+            )
+        ],
+        margin=dict(t=80),  # Increase top margin to make room for title and buttons
         showlegend=True,
         legend=dict(orientation="v", yanchor="middle", y=0.5, xanchor="left", x=1.02),
         height=600,
