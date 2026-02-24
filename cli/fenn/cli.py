@@ -342,6 +342,53 @@ def portfolio(by_account, refresh):
             with open(holdings_cache_path, 'w') as f:
                 json.dump(cache_data, f, indent=2)
         
+        # Load and merge manual holdings
+        manual_holdings_path = Config.DATA_DIR / 'manual_holdings.json'
+        if manual_holdings_path.exists():
+            try:
+                with open(manual_holdings_path, 'r') as f:
+                    manual_data = json.load(f)
+                    manual_holdings = manual_data.get('holdings', [])
+                    
+                    if manual_holdings:
+                        click.echo(f"\nMerging {len(manual_holdings)} manual holdings...")
+                        
+                        for holding in manual_holdings:
+                            symbol = holding.get('symbol', 'UNKNOWN')
+                            quantity = Decimal(str(holding.get('quantity', 0)))
+                            price = Decimal(str(holding.get('price', 0)))
+                            value = Decimal(str(holding.get('value', quantity * price)))
+                            
+                            # Get or create aggregated entry
+                            if symbol not in aggregated:
+                                aggregated[symbol] = {
+                                    'symbol': symbol,
+                                    'description': holding.get('description', ''),
+                                    'total_quantity': Decimal('0'),
+                                    'total_value': Decimal('0'),
+                                    'accounts': [],
+                                    'brokers': set(),
+                                    'currency': 'USD'
+                                }
+                            
+                            agg = aggregated[symbol]
+                            agg['total_quantity'] += quantity
+                            agg['total_value'] += value
+                            agg['brokers'].add(holding.get('institution_name', 'Manual'))
+                            agg['accounts'].append({
+                                'account_id': 'manual',
+                                'account_name': holding.get('account_name', 'Manual Account'),
+                                'quantity': float(quantity),
+                                'price': float(price),
+                                'avg_cost': float(price),
+                                'value': float(value),
+                                'manual': True
+                            })
+                            
+                            total_portfolio_value += value
+            except Exception as e:
+                click.echo(f"Warning: Could not load manual holdings: {e}")
+        
         click.echo()
         
         # Display results
@@ -468,6 +515,44 @@ def plot(chart_type, top, output, no_browser):
             click.echo("No holdings data found.")
             raise click.Abort()
         
+        # Load and merge manual holdings
+        manual_holdings_path = Config.DATA_DIR / 'manual_holdings.json'
+        if manual_holdings_path.exists():
+            try:
+                with open(manual_holdings_path, 'r') as f:
+                    manual_data = json.load(f)
+                    manual_holdings = manual_data.get('holdings', [])
+                    
+                    if manual_holdings:
+                        click.echo(f"Merging {len(manual_holdings)} manual holdings...")
+                        
+                        for holding in manual_holdings:
+                            symbol = holding.get('symbol', 'UNKNOWN')
+                            quantity = Decimal(str(holding.get('quantity', 0)))
+                            price = Decimal(str(holding.get('price', 0)))
+                            value = Decimal(str(holding.get('value', quantity * price)))
+                            
+                            # Get or create aggregated entry
+                            if symbol not in aggregated:
+                                aggregated[symbol] = {
+                                    'symbol': symbol,
+                                    'description': holding.get('description', ''),
+                                    'total_quantity': Decimal('0'),
+                                    'total_value': Decimal('0'),
+                                    'accounts': [],
+                                    'brokers': set(),
+                                    'currency': 'USD'
+                                }
+                            
+                            agg = aggregated[symbol]
+                            agg['total_quantity'] += quantity
+                            agg['total_value'] += value
+                            agg['brokers'].add(holding.get('institution_name', 'Manual'))
+                            
+                            total_portfolio_value += value
+            except Exception as e:
+                click.echo(f"Warning: Could not load manual holdings: {e}")
+
         click.echo(f"Generating {chart_type} chart...")
         
         # Create the appropriate chart
