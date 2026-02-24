@@ -553,6 +553,49 @@ def plot(chart_type, top, output, no_browser):
             except Exception as e:
                 click.echo(f"Warning: Could not load manual holdings: {e}")
 
+        # Merge GOOG and GOOGL
+        if 'GOOG' in aggregated and 'GOOGL' in aggregated:
+            click.echo("Merging GOOG and GOOGL...")
+            goog = aggregated['GOOG']
+            googl = aggregated['GOOGL']
+            
+            merged_quantity = goog['total_quantity'] + googl['total_quantity']
+            merged_value = goog['total_value'] + googl['total_value']
+            merged_brokers = goog['brokers'].union(googl['brokers'])
+            
+            # Create merged entry
+            aggregated['GOOG/L'] = {
+                'symbol': 'GOOG/L',
+                'description': 'Alphabet Inc. (Class A & C)',
+                'total_quantity': merged_quantity,
+                'total_value': merged_value,
+                'brokers': merged_brokers,
+                'accounts': goog.get('accounts', []) + googl.get('accounts', []),
+                'currency': 'USD'
+            }
+            
+            # Remove original entries
+            del aggregated['GOOG']
+            del aggregated['GOOGL']
+
+        # Merge BRK.B and BRKB
+        if 'BRKB' in aggregated:
+            if 'BRK.B' in aggregated:
+                click.echo("Merging BRKB into BRK.B...")
+                source = aggregated['BRKB']
+                target = aggregated['BRK.B']
+                
+                target['total_quantity'] += source['total_quantity']
+                target['total_value'] += source['total_value']
+                target['brokers'].update(source['brokers'])
+                target['accounts'].extend(source.get('accounts', []))
+                
+                del aggregated['BRKB']
+            else:
+                # Rename BRKB to BRK.B
+                aggregated['BRK.B'] = aggregated.pop('BRKB')
+                aggregated['BRK.B']['symbol'] = 'BRK.B'
+
         click.echo(f"Generating {chart_type} chart...")
         
         # Create the appropriate chart
