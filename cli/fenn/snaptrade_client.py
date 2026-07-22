@@ -163,9 +163,10 @@ class SnapTradeClient:
                 account_id=account_id
             )
             
+            body = getattr(response, 'body', response)
             positions = []
-            if isinstance(response, list):
-                for position in response:
+            if isinstance(body, list):
+                for position in body:
                     if hasattr(position, 'to_dict'):
                         positions.append(position.to_dict())
                     else:
