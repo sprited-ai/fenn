@@ -55,7 +55,8 @@ jobs:
 
       - name: Build site payload
         working-directory: cli
-        run: python build_site_payload.py -o /tmp/payload.json 2> /dev/null && echo "payload: ok"
+        run: |
+          python build_site_payload.py -o /tmp/payload.json 2> /dev/null && echo "payload: ok"
 
       - name: Push to tenn.sprited.ai
         env:
