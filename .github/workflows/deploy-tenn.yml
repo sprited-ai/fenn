@@ -11,6 +11,8 @@ on:
 
 jobs:
   deploy:
+    # Skip (grey, not red) until the CLOUDFLARE_API_TOKEN secret is configured.
+    if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
