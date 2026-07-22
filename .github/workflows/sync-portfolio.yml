@@ -64,8 +64,11 @@ jobs:
           SEND_EMAIL: ${{ github.event_name == 'schedule' && 'true' || inputs.send_email }}
         run: |
           EMAIL_FLAG=$([ "$SEND_EMAIL" = "true" ] && echo "" || echo "?email=0")
+          # workers.dev, not the custom domain: Cloudflare Access fronts
+          # tenn.sprited.ai and would 302 this request to the login page.
+          # The endpoint itself is bearer-token protected.
           HTTP_CODE=$(curl -s -o /dev/null -w '%{http_code}' -X POST \
-            "https://tenn.sprited.ai/api/ingest${EMAIL_FLAG}" \
+            "https://tenn.jc524.workers.dev/api/ingest${EMAIL_FLAG}" \
             -H "Authorization: Bearer ${TENN_INGEST_TOKEN}" \
             -H "Content-Type: application/json" \
             --data-binary @/tmp/payload.json)

@@ -25,29 +25,17 @@ Browser → tenn.sprited.ai → Cloudflare Access (SSO) → Worker verifies Acce
 - Portfolio data lives only in Workers KV — never committed to this (public) repo.
 - GitHub Actions logs suppress all financial output (public repo → public logs).
 
-## One-time setup remaining (dashboard access)
+## Access setup (done 2026-07-22)
 
-The wrangler OAuth token can't manage Zero Trust, so create the Access app manually:
+The Access app for `tenn.sprited.ai` exists (team `roidmaker.cloudflareaccess.com`);
+its AUD tag is wired into `vars` in [wrangler.jsonc](wrangler.jsonc). Because Access
+fronts the custom domain, GitHub Actions ingests via the workers.dev hostname instead
+(`tenn.jc524.workers.dev`) — that route stays enabled deliberately: ingest has its own
+bearer token, and every read route fails closed without a valid Access JWT on any
+hostname.
 
-1. [Zero Trust dashboard](https://one.dash.cloudflare.com/) → **Access → Applications →
-   Add application → Self-hosted**
-   - Application domain: `tenn.sprited.ai`
-   - Policy: Allow → Include → Emails: `jinhyuki@gmail.com` (your Cloudflare login)
-2. After creating, open the app → **Overview** → copy the **Audience (AUD) tag**.
-3. Your team domain is shown under **Settings → Custom Pages** (e.g. `yourteam.cloudflareaccess.com`).
-4. Fill both into `vars` in [wrangler.jsonc](wrangler.jsonc) and redeploy:
-
-```bash
-cd tenn && npx wrangler deploy
-```
-
-5. (Optional, for CI worker deploys) Create an API token with *Workers Scripts:Edit* +
-   *Workers Routes:Edit* and save it as the `CLOUDFLARE_API_TOKEN` repo secret.
-
-Note: `/api/ingest` and `/healthz` must stay reachable without SSO. If Access sits in
-front of the whole hostname it will block the GitHub Action — add a second Access app
-for `tenn.sprited.ai/api/ingest` with a **Bypass → Everyone** policy (the worker still
-enforces the bearer token), or use an Access service token in the workflow.
+Optional: for CI worker deploys, create an API token with *Workers Scripts:Edit* +
+*Workers Routes:Edit* and save it as the `CLOUDFLARE_API_TOKEN` repo secret.
 
 ## Manual operations
 
