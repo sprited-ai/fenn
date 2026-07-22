@@ -10,9 +10,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  # secrets context is not available in job-level `if`, so probe via a step output.
+  check-token:
+    runs-on: ubuntu-latest
+    outputs:
+      has_token: ${{ steps.probe.outputs.has }}
+    steps:
+      - id: probe
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: echo "has=${TOKEN:+true}" >> "$GITHUB_OUTPUT"
+
   deploy:
     # Skip (grey, not red) until the CLOUDFLARE_API_TOKEN secret is configured.
-    if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+    needs: check-token
+    if: needs.check-token.outputs.has_token == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
