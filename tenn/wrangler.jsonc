@@ -1,0 +1,27 @@
+{
+	"$schema": "https://unpkg.com/wrangler@4.113.0/config-schema.json",
+	"name": "tenn",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-07-01",
+	"routes": [
+		{ "pattern": "tenn.sprited.ai", "custom_domain": true }
+	],
+	"kv_namespaces": [
+		{ "binding": "TENN_KV", "id": "366a135d67cb419cb8c1e22037661519" }
+	],
+	"send_email": [
+		{ "name": "EMAIL" }
+	],
+	"vars": {
+		// Cloudflare Access (Zero Trust) settings. Worker fails CLOSED when
+		// these are empty: dashboard/API routes return 403 until Access is
+		// configured. See README.md for setup.
+		"ACCESS_TEAM_DOMAIN": "",
+		"ACCESS_AUD": "",
+		"EMAIL_TO": "jin@sprited.ai",
+		"EMAIL_FROM": "tenn@sprited.ai"
+	},
+	"observability": {
+		"logs": { "enabled": true }
+	}
+}
