@@ -37,6 +37,17 @@ hostname.
 Optional: for CI worker deploys, create an API token with *Workers Scripts:Edit* +
 *Workers Routes:Edit* and save it as the `CLOUDFLARE_API_TOKEN` repo secret.
 
+Optional: LLM daily commentary (dashboard "Daily brief" + email section) activates
+when the `ANTHROPIC_API_KEY` worker secret is set:
+
+```bash
+cd tenn && npx wrangler secret put ANTHROPIC_API_KEY
+```
+
+Without it, ingest reports `commentary: "no-key"` and everything else works.
+Commentary runs only on email-enabled ingests (the daily cron), or when the
+ingest URL has `?commentary=1`.
+
 ## Manual operations
 
 ```bash

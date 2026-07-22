@@ -53,6 +53,7 @@ def build_payload(portfolio: dict) -> dict:
             open_pnl = pos.get("open_pnl")
             if open_pnl is not None:
                 total_open_pnl += _f(open_pnl)
+            avg_price = pos.get("average_purchase_price")
 
             agg = by_symbol.setdefault(
                 ticker,
@@ -63,6 +64,8 @@ def build_payload(portfolio: dict) -> dict:
                     "price": _f(price) if price is not None else None,
                     "value": 0.0,
                     "open_pnl": None,
+                    "cost_basis": None,
+                    "avg_cost": None,
                     "accounts": [],
                 },
             )
@@ -72,16 +75,26 @@ def build_payload(portfolio: dict) -> dict:
                 agg["price"] = _f(price)
             if open_pnl is not None:
                 agg["open_pnl"] = (agg["open_pnl"] or 0.0) + _f(open_pnl)
+            if avg_price is not None and units:
+                agg["cost_basis"] = (agg["cost_basis"] or 0.0) + _f(avg_price) * units
             if name not in agg["accounts"]:
                 agg["accounts"].append(name)
 
     positions_out = sorted(by_symbol.values(), key=lambda x: -x["value"])
+    total_cost_basis = 0.0
+    for p in positions_out:
+        if p["cost_basis"] is not None:
+            p["cost_basis"] = round(p["cost_basis"], 2)
+            total_cost_basis += p["cost_basis"]
+            if p["units"]:
+                p["avg_cost"] = round(p["cost_basis"] / p["units"], 4)
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "synced_at": portfolio.get("synced_at"),
         "total_value": round(total_value, 2),
         "total_open_pnl": round(total_open_pnl, 2),
+        "total_cost_basis": round(total_cost_basis, 2),
         "accounts": accounts_out,
         "positions": positions_out,
     }
