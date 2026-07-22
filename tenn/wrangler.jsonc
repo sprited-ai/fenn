@@ -3,6 +3,10 @@
 	"name": "tenn",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-07-01",
+	// Import .html files as raw strings (dashboard page lives in src/dashboard.html)
+	"rules": [
+		{ "type": "Text", "globs": ["**/*.html"], "fallthrough": true }
+	],
 	"routes": [
 		{ "pattern": "tenn.sprited.ai", "custom_domain": true }
 	],

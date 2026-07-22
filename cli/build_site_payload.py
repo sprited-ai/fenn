@@ -35,8 +35,14 @@ def build_payload(portfolio: dict) -> dict:
         balance = _f(((info.get("balance") or {}).get("total") or {}).get("amount"))
         positions = account.get("positions", []) or []
         total_value += balance
+        institution = info.get("institution_name") or ""
         accounts_out.append(
-            {"name": name, "balance": balance, "positions_count": len(positions)}
+            {
+                "name": name,
+                "institution": institution,
+                "balance": balance,
+                "positions_count": len(positions),
+            }
         )
 
         for pos in positions:
@@ -67,6 +73,7 @@ def build_payload(portfolio: dict) -> dict:
                     "cost_basis": None,
                     "avg_cost": None,
                     "accounts": [],
+                    "institutions": [],
                 },
             )
             agg["units"] += units
@@ -79,6 +86,8 @@ def build_payload(portfolio: dict) -> dict:
                 agg["cost_basis"] = (agg["cost_basis"] or 0.0) + _f(avg_price) * units
             if name not in agg["accounts"]:
                 agg["accounts"].append(name)
+            if institution and institution not in agg["institutions"]:
+                agg["institutions"].append(institution)
 
     positions_out = sorted(by_symbol.values(), key=lambda x: -x["value"])
     total_cost_basis = 0.0
