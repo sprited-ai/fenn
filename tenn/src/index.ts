@@ -326,8 +326,11 @@ function validatePayload(p: unknown): p is Payload {
   return (
     !!x &&
     typeof x.total_value === "number" &&
+    x.total_value > 0 &&
     Array.isArray(x.accounts) &&
-    Array.isArray(x.positions)
+    x.accounts.length > 0 &&
+    Array.isArray(x.positions) &&
+    x.positions.length > 0
   );
 }
 

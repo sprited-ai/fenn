@@ -98,6 +98,15 @@ def main() -> int:
         return 1
 
     payload = build_payload(json.loads(args.input.read_text()))
+    # Refuse to publish an empty snapshot — a silent upstream failure (e.g. an
+    # SDK change) must fail the pipeline, not blank out the dashboard.
+    if not payload["accounts"] or payload["total_value"] <= 0 or not payload["positions"]:
+        print(
+            f"error: empty/suspicious payload (accounts={len(payload['accounts'])}, "
+            f"positions={len(payload['positions'])}) — refusing to publish",
+            file=sys.stderr,
+        )
+        return 2
     out = json.dumps(payload, indent=1)
     if args.output:
         args.output.write_text(out)

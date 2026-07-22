@@ -55,8 +55,14 @@ jobs:
 
       - name: Build site payload
         working-directory: cli
+        # Success output stays hidden (contains totals); the failure path only
+        # prints sanitized counts, so it is safe to surface.
         run: |
-          python build_site_payload.py -o /tmp/payload.json 2> /dev/null && echo "payload: ok"
+          if python build_site_payload.py -o /tmp/payload.json 2> /tmp/payload_err.txt; then
+            echo "payload: ok"
+          else
+            echo "payload: FAILED"; cat /tmp/payload_err.txt; exit 1
+          fi
 
       - name: Push to tenn.sprited.ai
         env:

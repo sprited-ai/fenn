@@ -1,4 +1,6 @@
-snaptrade-python-sdk>=2.0.0
+# Pinned: v12 changed response shapes and silently breaks account/position
+# parsing (CI installed 12.0.0 while local dev had 11.x → empty sync payload).
+snaptrade-python-sdk==11.0.161
 click>=8.1.0
 python-dotenv>=1.0.0
 plotly>=5.18.0
